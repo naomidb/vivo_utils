@@ -1,11 +1,11 @@
-from thing import Thing
+from vivo_queries.vdos.thing import Thing
 
 def get_params(connection):
     thing = Thing(connection)
     params = {'Thing': thing,}
     return params
 
-def fill_params(connection, **params)
+def fill_params(connection, **params):
     params['subj'] = connection.vivo_url + params['Thing'].n_number
 
     return params

@@ -1,6 +1,6 @@
-from queries import get_all_with_x_as_obj
-from queries import get_all_with_x_as_subj
-from thing import Thing
+from vivo_queries.vdos.thing import Thing
+from vivo_queries.queries import get_all_with_x_as_obj
+from vivo_queries.queries import get_all_with_x_as_subj
 
 def get_params(connection):
     thing = Thing(connection)

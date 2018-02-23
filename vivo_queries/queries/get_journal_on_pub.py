@@ -1,5 +1,5 @@
-from article import Article
-from journal import Journal
+from vivo_queries.vdos.article import Article
+from vivo_queries.vdos.journal import Journal
 
 def get_params(connection):
     article = Article(connection)

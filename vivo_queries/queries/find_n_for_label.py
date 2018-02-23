@@ -1,4 +1,4 @@
-from thing import Thing
+from vivo_queries.vdos.thing import Thing
 
 def get_params(connection):
     thing = Thing (connection)
@@ -9,6 +9,8 @@ def fill_params(connection, **params):
     params['identity'] = ""
     if params['Thing'].type == 'academic_article':
         params['identity'] = 'http://purl.org/ontology/bibo/AcademicArticle'
+    if params['Thing'].type == 'letter':
+        params['identity'] = 'http://purl.org/ontology/bibo/Letter'
     if params['Thing'].type == 'journal':
         params['identity'] = 'http://purl.org/ontology/bibo/Journal'
     if params['Thing'].type == 'person':

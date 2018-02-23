@@ -1,7 +1,7 @@
 from jinja2 import Environment
 
-from journal import Journal
-from publisher import Publisher
+from vivo_queries.vdos.journal import Journal
+from vivo_queries.vdos.publisher import Publisher
 
 def get_params(connection):
     journal = Journal(connection)
@@ -20,7 +20,7 @@ def fill_params(connection, **params):
     
     return params
 
-def get_triples(api)
+def get_triples(api):
     triples = """\
 <{{upload_url}}{{Journal.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/Journal> .
 <{{upload_url}}{{Journal.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Journal.name}}"^^<http://www.w3.org/2001/XMLSchema#string> .

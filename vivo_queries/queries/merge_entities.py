@@ -1,7 +1,7 @@
-from queries import get_label
-from thing import Thing
-from queries import delete_entity
-from queries import get_all_triples
+from vivo_queries.vdos.thing import Thing
+from vivo_queries.queries import get_label
+from vivo_queries.queries import delete_entity
+from vivo_queries.queries import get_all_triples
 
 def get_params(connection):
     thing1 = Thing(connection)

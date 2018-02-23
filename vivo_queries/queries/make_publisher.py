@@ -1,4 +1,4 @@
-from publisher import Publisher
+from vivo_queries.vdos.publisher import Publisher
 
 def get_params(connection):
     publisher = Publisher(connection)

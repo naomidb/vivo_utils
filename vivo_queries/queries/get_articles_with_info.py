@@ -1,4 +1,4 @@
-from author import Author
+from vivo_queries.vdos.author import Author
 
 def get_params(connection):
     author = Author(connection)
@@ -17,7 +17,7 @@ def get_query(stage, **params):
     if stage == 2:
         query = """ SELECT ?year WHERE {{<{url}{d_n}> <http://vivoweb.org/ontology/core#dateTimeValue> ?duri . ?duri <http://vivoweb.org/ontology/core#dateTime> ?year .}}""".format(params['url'], params['d_n'])
 
-    is stage == 3:
+    if stage == 3:
         query = """ SELECT ?label WHERE {{<{url}{d_n}> <http://vivoweb.org/ontology/core#hasPublicationVenue> ?puri . ?puri <http://www.w3.org/2000/01/rdf-schema#label> ?label .}}""".format(params['url'], params['d_n'])
 
     return query

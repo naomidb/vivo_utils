@@ -1,8 +1,8 @@
 from jinja2 import Environment
 
-from author import Author
-from article import Article
-from journal import Journal
+from vivo_queries.vdos.author import Author
+from vivo_queries.vdos.article import Article
+from vivo_queries.vdos.journal import Journal
 
 def get_params(connection):
     author = Author(connection)
@@ -78,7 +78,7 @@ def get_triples(api):
 {%- endif %}
 """
 
-  if api:
+    if api:
         api_trip = """\
         INSERT DATA {{
             GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2>

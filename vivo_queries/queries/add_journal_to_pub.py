@@ -1,6 +1,6 @@
-from article import Article
-from journal import Journal
-from queries import make_person
+from vivo_queries.vdos.article import Article
+from vivo_queries.vdos.journal import Journal
+from vivo_queries.queries import make_person
 
 def get_params(connection):
     article = Article(connection)

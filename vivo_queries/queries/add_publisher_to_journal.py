@@ -1,6 +1,6 @@
-from article import Article
-from author import Author
-from queries import make_publisher
+from vivo_queries.vdos.article import Article
+from vivo_queries.vdos.author import Author
+from vivo_queries.queries import make_publisher
 
 def get_params(connection):
     article = Article(connection)
@@ -16,7 +16,7 @@ def fill_params(connection, **params):
 
     return params
 
-def get_triples(api, **params)
+def get_triples(api, **params):
     triples = """
         INSERT DATA {{
             GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2>

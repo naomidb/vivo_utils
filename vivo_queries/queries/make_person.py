@@ -1,6 +1,6 @@
 from jinja2 import Environment
 
-from author import Author
+from vivo_queries.vdos.author import Author
 
 def get_params(connection):
     author = Author(connection)

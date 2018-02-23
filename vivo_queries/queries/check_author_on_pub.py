@@ -1,5 +1,5 @@
-from article import Article
-from author import Author
+from vivo_queries.vdos.article import Article
+from vivo_queries.vdos.author import Author
 
 def get_params(connection):
     article = Article(connection)
@@ -7,7 +7,7 @@ def get_params(connection):
     params = {'Article': article, 'Author': author}
     return params
 
-def fill_params(connection, **params)
+def fill_params(connection, **params):
     params['author_url'] = connection.vivo_url + params['Author'].n_number
     params['article_url'] = connection.vivo_url + params['Article'].n_number
 

@@ -1,6 +1,6 @@
-from queries import get_label
-from thing import Thing
-from queries import get_all_triples
+from vivo_queries.vdos.thing import Thing
+from vivo_queries.queries import get_label
+from vivo_queries.queries import get_all_triples
 
 def get_params(connection):
     thing = Thing(connection)
@@ -42,7 +42,7 @@ def run(connection, **params):
     response = connection.run_update(q)
     return response
 
-def write_rdf(connection, **params)
+def write_rdf(connection, **params):
     params = fill_params(connection, **params)
     rdf = get_triples(False, **params)
 

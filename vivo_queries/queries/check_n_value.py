@@ -1,4 +1,4 @@
-from thing import Thing
+from vivo_queries.vdos.thing import Thing
 
 def get_params(connection):
     thing = Thing(connection)

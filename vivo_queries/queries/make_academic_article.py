@@ -1,12 +1,13 @@
 from jinja2 import Environment
 
-from article import Article
-from author import Author
-from journal import Journal
+from vivo_queries.vdos.article import Article
+from vivo_queries.vdos.author import Author
+from vivo_queries.vdos.journal import Journal
 
 def get_params(connection):
     author = Author(connection)
     article = Article(connection)
+    article.type = 'letter'
     journal = Journal(connection)
     params = {'Author': author, 'Article': article, 'Journal': journal}
     return params
