@@ -11,10 +11,10 @@ def get_params(connection):
 def fill_params(connection, **params):
     if not params['Author'].n_number:
         make_person.run(connection, **params)
-    relationship_id = connection.gen_n()
-    relation_url = connection.vivo_url + relationship_id
-    article_url = connection.vivo_url + params['Article'].n_number
-    author_url = connection.vivo_url + params['Author'].n_number
+    params['relationship_id'] = connection.gen_n()
+    params['relation_url'] = connection.vivo_url + params['relationship_id']
+    params['article_url'] = connection.vivo_url + params['Article'].n_number
+    params['author_url'] = connection.vivo_url + params['Author'].n_number
 
     return params
 
@@ -24,7 +24,7 @@ def get_triples(api, **params):
 <{RELATION}> <http://vivoweb.org/ontology/core#relates> <{ARTICLE}> .
 <{RELATION}> <http://vivoweb.org/ontology/core#relates> <{AUTHOR}> .
 <{ARTICLE}> <http://vivoweb.org/ontology/core#relatedBy> <{RELATION}> .
-    """.format(RELATION = relation_url, ARTICLE = article_url, AUTHOR = author_url)
+    """.format(RELATION = params['relation_url'], ARTICLE = params['article_url'], AUTHOR = params['author_url'])
 
     if api:
         api_trip = """\

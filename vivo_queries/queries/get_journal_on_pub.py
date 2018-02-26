@@ -1,20 +1,17 @@
 from vivo_queries.vdos.article import Article
-from vivo_queries.vdos.journal import Journal
 
 def get_params(connection):
     article = Article(connection)
-    journal = Journal(connection)
-    params = {'Article': article, 'Journal': journal}
+    params = {'Article': article}
     return params
 
-def fill_params(conneciton, **params):
-    params['journal_url'] = connection.vivo_url + params['Journal'].n_number
+def fill_params(connection, **params):
     params['article_url'] = connection.vivo_url + params['Article'].n_number
     
     return params
 
 def get_query(**params):
-    query = """SELECT ?j ?label WHERE{{?j <http://vivoweb.org/ontology/core#publicationVenueFor> <{}> . <{}> <http://vivoweb.org/ontology/core#hasPublicationVenue> ?j . ?j <http://www.w3.org/2000/01/rdf-schema#label> ?label . }}""".format(params['article_url'], ['article_url'])
+    query = """SELECT ?j ?label WHERE{{?j <http://vivoweb.org/ontology/core#publicationVenueFor> <{}> . <{}> <http://vivoweb.org/ontology/core#hasPublicationVenue> ?j . ?j <http://www.w3.org/2000/01/rdf-schema#label> ?label . }}""".format(params['article_url'], params['article_url'])
 
     return query
 

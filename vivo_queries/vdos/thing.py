@@ -1,6 +1,6 @@
 from VDO import VivoDomainObject
 
-class Thing(object):
+class Thing(VivoDomainObject):
     def __init__(self, connection):
         #might have to swap type and category
         self.connection = connection
@@ -9,5 +9,6 @@ class Thing(object):
         self.n_number = None
         self.name = None
         self.type = None
+        self.extra = None
 
-        self.details = ['type']
+        self.details = ['extra']

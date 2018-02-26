@@ -20,6 +20,7 @@ import get_label
 import get_person_list
 import get_vcard
 import make_academic_article
+import make_editorial_article
 import make_journal
 import make_letter
 import make_person

@@ -11,21 +11,16 @@ def get_params(connection):
 def fill_params(connection, **params):
     if not params['Journal'].n_number:
         make_publisher.run(connection, **params)
-    article_url = connection.vivo_url + params['Article'].n_number
-    journal_url = connection.vivo_url + params['Journal'].n_number
+    params['article_url'] = connection.vivo_url + params['Article'].n_number
+    params['journal_url'] = connection.vivo_url + params['Journal'].n_number
 
     return params
 
 def get_triples(api, **params):
     triples = """
-        INSERT DATA {{
-            GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2>
-            {{
-                <{ARTICLE}> <http://vivoweb.org/ontology/core#hasPublicationVenue> <{JOURNAL}> .
-                <{JOURNAL}> <http://vivoweb.org/ontology/core#publicationVenueFor> <{ARTICLE}> .
-            }}
-        }}
-    """.format(ARTICLE = article_url, JOURNAL = journal_url)
+<{ARTICLE}> <http://vivoweb.org/ontology/core#hasPublicationVenue> <{JOURNAL}> .
+<{JOURNAL}> <http://vivoweb.org/ontology/core#publicationVenueFor> <{ARTICLE}> .
+    """.format(ARTICLE = params['article_url'], JOURNAL = params['journal_url'])
 
     if api:
         api_trip = """\

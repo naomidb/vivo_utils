@@ -29,7 +29,7 @@ def run(connection, **params):
     for listing in triple_dump['results']['bindings']:
         subj = listing['s']['value']
         pred = listing['p']['value']
-        trip = "<" + subj + "> <" + pred + "> <" + obj + ">"
+        trip = "<" + subj + "> <" + pred + "> <" + params['obj'] + ">"
         triples.append(trip)
 
     return triples

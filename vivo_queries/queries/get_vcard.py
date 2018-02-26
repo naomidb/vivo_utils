@@ -8,6 +8,8 @@ def get_params(connection):
 def fill_params(connection, **params):
     params['subj'] = connection.vivo_url + params['Author'].n_number
 
+    return params
+
 def get_query(**params):
     query = """ SELECT ?vcard WHERE {{<{}> <http://purl.obolibrary.org/obo/ARG_2000028> ?vcard .}} LIMIT 1 """.format(params['subj'])
 

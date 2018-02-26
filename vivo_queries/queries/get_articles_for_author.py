@@ -5,12 +5,19 @@ def get_params(connection):
     params = {'Author': author}
     return params
 
+def fill_params(connection, **params):
+    vivo_url = connection.vivo_url
+    params['author_url'] = vivo_url + params['Author'].n_number
+
+    return params
+
 def get_query(**params):
-    query = """ SELECT ?label ?article WHERE {{<{url}{Author_n}> <http://vivoweb.org/ontology/core#relatedBy> ?relation . ?relation <http://vivoweb.org/ontology/core#relates> ?article . ?article <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/AcademicArticle> . ?article <http://www.w3.org/2000/01/rdf-schema#label> ?label . }} """.format(url = connection.vivo_url, Author_n = params['Author'].n_number)
+    query = """ SELECT ?label ?article WHERE {{<{}> <http://vivoweb.org/ontology/core#relatedBy> ?relation . ?relation <http://vivoweb.org/ontology/core#relates> ?article . ?article <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/AcademicArticle> . ?article <http://www.w3.org/2000/01/rdf-schema#label> ?label . }} """.format(params['author_url'])
 
     return query
 
 def run(connection, **params):
+    params = fill_params(connection, **params)
     q = get_query(**params)
 
     print('=' * 20 + "\nGenerating Author's Article List\n" + '=' * 20)

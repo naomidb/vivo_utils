@@ -7,7 +7,6 @@ from vivo_queries.vdos.journal import Journal
 def get_params(connection):
     author = Author(connection)
     article = Article(connection)
-    article.type = 'letter'
     journal = Journal(connection)
     params = {'Author': author, 'Article': article, 'Journal': journal}
     return params
@@ -28,6 +27,8 @@ def fill_params(connection, **params):
     params['Article'].final_check(relationship_id)
     params['Journal'].final_check(relationship_id)
     params['Article'].final_check(params['Journal'].n_number)
+
+    return params
 
 def get_triples(api):
     triples = """\

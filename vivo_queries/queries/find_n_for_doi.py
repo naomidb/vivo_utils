@@ -6,12 +6,12 @@ def get_params(connection):
     return params
 
 def get_query(**params):
-    query = """SELECT ?uri ?doi WHERE {{?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/AcademicArticle> . ?uri <http://purl.org/ontology/bibo/doi> ?doi . FILTER (regex (?doi, "{}")) }}""".format(params['Thing'].name)
+    query = """SELECT ?uri ?doi WHERE {{?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/AcademicArticle> . ?uri <http://purl.org/ontology/bibo/doi> ?doi . FILTER (regex (?doi, "{}")) }}""".format(params['Thing'].extra)
 
     return query
     
 def run(connection, **params):
-    q = get_query(connection, **params)
+    q = get_query(**params)
 
     print('=' * 20 + "\nFinding n number\n" + '=' * 20)
     response = connection.run_query(q)

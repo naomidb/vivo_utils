@@ -9,19 +9,23 @@ def fill_params(connection, **params):
     params['identity'] = ""
     if params['Thing'].type == 'academic_article':
         params['identity'] = 'http://purl.org/ontology/bibo/AcademicArticle'
-    if params['Thing'].type == 'letter':
+    elif params['Thing'].type == 'letter':
         params['identity'] = 'http://purl.org/ontology/bibo/Letter'
-    if params['Thing'].type == 'journal':
+    elif params['Thing'].type == 'editorial':
+        params['identity'] = 'http://vivoweb.org/ontology/core#EditorialArticle'
+    elif params['Thing'].type == 'journal':
         params['identity'] = 'http://purl.org/ontology/bibo/Journal'
-    if params['Thing'].type == 'person':
+    elif params['Thing'].type == 'person':
         params['identity'] = 'http://xmlns.com/foaf/0.1/Person'
-    if params['Thing'].type == 'publisher':
+    elif params['Thing'].type == 'publisher':
         params['identity'] = 'http://vivoweb.org/ontology/core#Publisher'
+    else:
+        params['identity'] = 'http://www.w3.org/2002/07/owl#Thing'
 
     return params
 
 def get_query(**params):
-    query = """SELECT ?uri ?label WHERE {{?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <{}> . ?uri <http://www.w3.org/2000/01/rdf-schema#label> ?label . FILTER (regex (?label, "{}", "i")) }}""".format(params['identity'], params['thing'].name)
+    query = """SELECT ?uri ?label WHERE {{?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <{}> . ?uri <http://www.w3.org/2000/01/rdf-schema#label> ?label . FILTER (regex (?label, "{}", "i")) }}""".format(params['identity'], params['Thing'].extra)
 
     return query
 

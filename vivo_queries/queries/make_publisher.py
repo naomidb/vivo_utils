@@ -11,7 +11,7 @@ def fill_params(connection, **params):
 
     return params
 
-def get_triples(**params):
+def get_triples(api, **params):
     triples = """\
 <{PUBLISHER}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
 <{PUBLISHER}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Publisher> .
@@ -35,7 +35,7 @@ def get_triples(**params):
 
 def run(connection, **params):
     params = fill_params(connection, **params)
-    q = get_triples(**params)
+    q = get_triples(True, **params)
 
     print('=' * 20 + "\nCreating new publisher\n" + '=' * 20)
     response = connection.run_update(q)
@@ -43,6 +43,6 @@ def run(connection, **params):
 
 def write_rdf(connection, **params):
     params = fill_params(connection, **params)
-    rdf = get_triples(**params)
+    rdf = get_triples(False, **params)
 
     return rdf

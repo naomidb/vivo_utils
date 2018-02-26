@@ -1,3 +1,5 @@
+import re
+
 from vivo_queries.vdos.thing import Thing
 from vivo_queries.queries import get_label
 from vivo_queries.queries import get_all_triples
@@ -11,6 +13,8 @@ def fill_params(connection, **params):
     params['triples'] = get_all_triples.run(connection, **params)
     params['label'] = get_label.run(connection, **params)
 
+    return params
+
 def get_triples(api, **params):
     format_triples = ""
     for trip in params['triples']:
@@ -18,7 +22,7 @@ def get_triples(api, **params):
 
     #Fix label
     format_triples = format_triples.encode('utf-8')
-    format_triples = str.replace(format_triples, "<" + label + ">", "\"" + label + "\"")
+    format_triples = str.replace(format_triples, "<" + params['label'] + ">", "\"" + params['label'] + "\"")
 
     if api:
         api_trip = """\
@@ -33,6 +37,19 @@ def get_triples(api, **params):
 
     else:
         return format_triples
+
+def fix_strings(triples):
+    clean_triples = []
+    for trip in triples:
+        sub, pred, obj = re.findall("<.*?>", trip)[:]
+        #If the object is not a uri, change the angular brackets into quotation marks 
+        if 'http://' not in obj and 'https://' not in obj:
+            bare_obj = obj[1:-1]
+            quoted_obj = '"' + bare_obj + '"'
+            trip = sub + ' ' + pred + ' ' + quoted_obj
+        clean_triples.append(trip)
+
+    return clean_triples
 
 def run(connection, **params):
     params = fill_params(connection, **params)

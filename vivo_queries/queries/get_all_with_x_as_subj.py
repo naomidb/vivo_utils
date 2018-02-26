@@ -29,7 +29,10 @@ def run(connection, **params):
     for listing in triple_dump['results']['bindings']:
         pred = listing['p']['value']
         obj = listing['o']['value']
-        trip = "<" + subj + "> <" + pred + "> <" + obj + ">"
+        if 'http://' not in obj and 'https://' not in obj:
+            trip = '<' + params['subj'] + '> <' + pred + '> "' + obj + '"'
+        else:
+            trip = '<' + params['subj'] + '> <' + pred + '> <' + obj + '>'
         triples.append(trip)
 
     return triples

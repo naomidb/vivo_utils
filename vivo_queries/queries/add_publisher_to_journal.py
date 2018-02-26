@@ -1,31 +1,28 @@
-from vivo_queries.vdos.article import Article
-from vivo_queries.vdos.author import Author
+from collections import OrderedDict
+
+from vivo_queries.vdos.journal import Journal
+from vivo_queries.vdos.publisher import Publisher
 from vivo_queries.queries import make_publisher
 
 def get_params(connection):
-    article = Article(connection)
-    author = Author(connection)
-    params = {'Article': article, 'Author': author}
+    journal = Journal(connection)
+    publisher = Publisher(connection)
+    params = {'Journal': journal, 'Publisher': publisher}
     return params
 
 def fill_params(connection, **params):
     if not params['Publisher'].n_number:
         make_publisher.run(connection, **params)
-    publisher_url = connection.vivo_url + params['Publisher'].n_number
-    journal_url = connection.vivo_url + params['Journal'].n_number
+    params['publisher_url'] = connection.vivo_url + params['Publisher'].n_number
+    params['journal_url'] = connection.vivo_url + params['Journal'].n_number
 
     return params
 
 def get_triples(api, **params):
     triples = """
-        INSERT DATA {{
-            GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2>
-            {{
-                <{PUBLISHER}> <http://vivoweb.org/ontology/core#publisherOf> <{JOURNAL}> .
-                <{JOURNAL}> <http://vivoweb.org/ontology/core#publisher> <{PUBLISHER}> .
-            }}
-        }}
-    """.format(PUBLISHER = publisher_url, JOURNAL = journal_url)
+<{PUBLISHER}> <http://vivoweb.org/ontology/core#publisherOf> <{JOURNAL}> .
+<{JOURNAL}> <http://vivoweb.org/ontology/core#publisher> <{PUBLISHER}> .
+    """.format(PUBLISHER = params['publisher_url'], JOURNAL = params['journal_url'])
 
     if api:
         api_trip = """\

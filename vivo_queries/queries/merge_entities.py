@@ -1,5 +1,4 @@
 from vivo_queries.vdos.thing import Thing
-from vivo_queries.queries import get_label
 from vivo_queries.queries import delete_entity
 from vivo_queries.queries import get_all_triples
 
@@ -16,18 +15,16 @@ def fill_params(connection, **params):
     params['old_uri'] = params['Secondary URI'].n_number
 
     params['triples'] = get_all_triples.run(connection, **merge_params)
-    params['label'] = get_label.run(connection, **merge_params)
 
     return params
 
 def get_triples(api, **params):
     format_triples = ""
-    for trip in params['old_trips']:
+    for trip in params['triples']:
         format_triples = format_triples + trip + " . \n"
 
     format_triples = format_triples.encode('utf-8')
-    format_triples = str.replace(format_triples, old_uri + ">", final_uri + ">")
-    format_triples = str.replace(format_triples, "<" + params['label'] + ">", "\"" + label + "\"")
+    format_triples = str.replace(format_triples, params['old_uri'] + ">", params['final_uri'] + ">")
 
     if api:
         api_trip = """\
@@ -53,8 +50,10 @@ def run(connection, **params):
     print(ins_response)
 
     #Delete if Insert is successful
+    import pdb
+    pdb.set_trace()
     merge_params = {'Thing': params['Secondary URI']}
-    if ins_response == 200:
+    if ins_response.status_code == 200:
         del_response = delete_entity.run(connection, **merge_params)
         return del_response
     else:
