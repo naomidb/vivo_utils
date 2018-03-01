@@ -1,8 +1,8 @@
 import random
 import requests
 
-from queries import check_n_value
-from thing import Thing
+from vivo_queries.queries import check_n_value
+from vivo_queries.vdos.thing import Thing
 
 class Connection(object):
     def __init__(self, vivo_url, user, password, u_endpoint, q_endpoint):
