@@ -93,7 +93,8 @@ def get_triples(api):
         return jinj_trip
 
     else:
-        return triples
+        trips = Environment().from_string(triples)
+        return trips
 
 def run(connection, **params):
     params = fill_params(connection, **params)

@@ -74,20 +74,21 @@ def get_triples(api):
 """
 
   if api:
-    api_trip = """\
-        INSERT DATA {{
-            GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2>
-            {{
-              {TRIPS}
+        api_trip = """\
+            INSERT DATA {{
+                GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2>
+                {{
+                  {TRIPS}
+                }}
             }}
-        }}
-            """.format(TRIPS=triples)
+                """.format(TRIPS=triples)
 
-    jinj_trip = Environment().from_string(api_trip)
-    return jinj_trip
+        jinj_trip = Environment().from_string(api_trip)
+        return jinj_trip
 
   else:
-    return triples
+        trips = Environment().from_string(triples)
+        return trips
 
 def run(connection, **params):
     params = fill_params(connection, **params)
