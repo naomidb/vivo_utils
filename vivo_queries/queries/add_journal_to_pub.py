@@ -19,8 +19,7 @@ def fill_params(connection, **params):
 def get_triples(api, **params):
     triples = """
 <{ARTICLE}> <http://vivoweb.org/ontology/core#hasPublicationVenue> <{JOURNAL}> .
-<{JOURNAL}> <http://vivoweb.org/ontology/core#publicationVenueFor> <{ARTICLE}> .
-    """.format(ARTICLE = params['article_url'], JOURNAL = params['journal_url'])
+<{JOURNAL}> <http://vivoweb.org/ontology/core#publicationVenueFor> <{ARTICLE}> .""".format(ARTICLE = params['article_url'], JOURNAL = params['journal_url'])
 
     if api:
         api_trip = """\

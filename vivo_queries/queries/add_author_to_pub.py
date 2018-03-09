@@ -23,8 +23,7 @@ def get_triples(api, **params):
 <{RELATION}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Authorship> .
 <{RELATION}> <http://vivoweb.org/ontology/core#relates> <{ARTICLE}> .
 <{RELATION}> <http://vivoweb.org/ontology/core#relates> <{AUTHOR}> .
-<{ARTICLE}> <http://vivoweb.org/ontology/core#relatedBy> <{RELATION}> .
-    """.format(RELATION = params['relation_url'], ARTICLE = params['article_url'], AUTHOR = params['author_url'])
+<{ARTICLE}> <http://vivoweb.org/ontology/core#relatedBy> <{RELATION}> .""".format(RELATION = params['relation_url'], ARTICLE = params['article_url'], AUTHOR = params['author_url'])
 
     if api:
         api_trip = """\
@@ -49,7 +48,7 @@ def run(connection, **params):
     response = connection.run_update(q)
     return response
 
-def write_rdf():
+def write_rdf(connection, **params):
     params = fill_params(connection, **params)
     rdf = get_triples(False, **params)
 
