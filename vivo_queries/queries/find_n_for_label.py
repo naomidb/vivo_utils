@@ -25,7 +25,12 @@ def fill_params(connection, **params):
     return params
 
 def get_query(**params):
-    query = """SELECT ?uri ?label WHERE {{?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <{}> . ?uri <http://www.w3.org/2000/01/rdf-schema#label> ?label . FILTER (regex (?label, "{}", "i")) }}""".format(params['identity'], params['Thing'].extra)
+    try:
+        query = """SELECT ?uri ?label WHERE {{?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <{}> . ?uri <http://www.w3.org/2000/01/rdf-schema#label> ?label . FILTER (regex (?label, "{}", "i")) }}""".format(params['identity'], params['Thing'].extra)
+    except UnicodeEncodeError as e:
+        print(e)
+        print('Error in: ' + params['Thing'].extra)
+        exit()
 
     return query
 
