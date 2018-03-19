@@ -1,4 +1,4 @@
-from VDO import VivoDomainObject
+from vivo_queries.vdos.VDO import VivoDomainObject
 
 class Publisher(VivoDomainObject):
     def __init__(self, connection):

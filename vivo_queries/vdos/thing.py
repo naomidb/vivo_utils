@@ -1,4 +1,4 @@
-from VDO import VivoDomainObject
+from vivo_queries.vdos.VDO import VivoDomainObject
 
 class Thing(VivoDomainObject):
     def __init__(self, connection):

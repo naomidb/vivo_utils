@@ -41,7 +41,12 @@ def run(connection, **params):
     print('=' * 20 + "\nFinding n number\n" + '=' * 20)
     response = connection.run_query(q)
 
-    lookup = response.json()
+    try:
+        lookup = response.json()
+    except Exception as e:
+        import pdb
+        pdb.set_trace()
+
     matches = {}
     for listing in lookup['results']['bindings']:
         name = parse_json(listing, 'label')

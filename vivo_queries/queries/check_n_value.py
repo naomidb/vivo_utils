@@ -27,7 +27,7 @@ def run(connection, **params):
         if n_check['results']['bindings'][0]['u']:
             return True
     except IndexError as e:
-        if e.message != "list index out of range":
+        if str(e) != "list index out of range":
             raise
         else:
             return False

@@ -1,5 +1,5 @@
 import urllib
-from VDO import VivoDomainObject
+from vivo_queries.vdos.VDO import VivoDomainObject
 
 class Author(VivoDomainObject):
     def __init__(self, connection):
