@@ -22,6 +22,10 @@ def fill_params(connection, **params):
     else:
         params['identity'] = 'http://www.w3.org/2002/07/owl#Thing'
 
+    #Workaround for escaping parentheses
+    params['Thing'].extra = params['Thing'].extra.replace('(', '[(]')
+    params['Thing'].extra = params['Thing'].extra.replace(')', '[)]')
+
     return params
 
 def get_query(**params):
@@ -30,7 +34,7 @@ def get_query(**params):
     except UnicodeEncodeError as e:
         print(e)
         print('Error in: ')
-	print(params['Thing'].extra)
+        print(params['Thing'].extra)
         exit()
 
     return query
