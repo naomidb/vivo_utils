@@ -100,7 +100,7 @@ def run(connection, **params):
     params = fill_params(connection, **params)
     q = get_triples(True)
 
-    print('=' * 20 + "\nAdding letter with pre-existing author\n" + '=' * 20)
+    print('=' * 20 + "\nAdding letter\n" + '=' * 20)
     response = connection.run_update(q.render(**params))
     return response
 
