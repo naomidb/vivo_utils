@@ -8,6 +8,7 @@ The full_clean is used for string matching and so should be more strict.
 def clean_name(result):
     clean_result = result.replace(' \\&', ' &')
     clean_result = clean_result.replace('\n', ' ')
+    clean_result = clean_result.replace('"', '\\"')
     return clean_result
 
 def full_clean(result):
