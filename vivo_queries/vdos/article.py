@@ -14,8 +14,8 @@ class Article(VivoDomainObject):
         self.end_page = None
         self.publication_year = None
         self.doi = None
-        self.pubmed_id = None
-        self.details = ['volume', 'issue', 'start_page', 'end_page', 'publication_year', 'doi', 'pubmed_id']
+        self.pmid = None
+        self.details = ['volume', 'issue', 'start_page', 'end_page', 'publication_year', 'doi', 'pmid']
 
     def lookup(self, connection):
         params = {'Article': self}

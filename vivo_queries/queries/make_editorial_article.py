@@ -64,7 +64,7 @@ def get_triples(api):
 <{{upload_url}}{{Article.n_number}}> <http://purl.org/ontology/bibo/doi> "{{ Article.doi }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
 
-{%- if Article.pubmed_id %}
+{%- if Article.pmid %}
 <{{upload_url}}{{Article.n_number}}> <http://purl.org/ontology/bibo/pmid> "{{ Article.pubmed_id }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
 
