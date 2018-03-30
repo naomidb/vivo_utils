@@ -27,4 +27,4 @@ class Article(VivoDomainObject):
         self.end_page = info['end page']
         self.publication_year = info['year']
         self.doi = info['doi']
-        self.pubmed_id = info['pmid']
+        self.pmid = info['pmid']
