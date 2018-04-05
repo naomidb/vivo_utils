@@ -22,9 +22,14 @@ def fill_params(connection, **params):
     else:
         params['identity'] = 'http://www.w3.org/2002/07/owl#Thing'
 
+    #Escape special characters
+    params['Thing'].extra = params['Thing'].extra.replace('(', '\\\(')
+    params['Thing'].extra = params['Thing'].extra.replace(')', '\\\)')
+    params['Thing'].extra = params['Thing'].extra.replace('[', '\\\[')
+    
     #Workaround for escaping parentheses
-    params['Thing'].extra = params['Thing'].extra.replace('(', '[(]')
-    params['Thing'].extra = params['Thing'].extra.replace(')', '[)]')
+    # params['Thing'].extra = params['Thing'].extra.replace('(', '[(]')
+    # params['Thing'].extra = params['Thing'].extra.replace(')', '[)]')
 
     return params
 

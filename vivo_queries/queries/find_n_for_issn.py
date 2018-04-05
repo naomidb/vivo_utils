@@ -6,6 +6,11 @@ def get_params(connection):
     return params
 
 def get_query(**params):
+    #Escape special characters
+    params['Thing'].extra = params['Thing'].extra.replace('(', '\\\(')
+    params['Thing'].extra = params['Thing'].extra.replace(')', '\\\)')
+    params['Thing'].extra = params['Thing'].extra.replace('[', '\\\[')
+    
     query = """SELECT ?uri ?issn WHERE {{?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/Journal> . ?uri <http://purl.org/ontology/bibo/issn> ?issn . FILTER (regex (?issn, "{}")) }}""".format(params['Thing'].extra)
 
     return query
@@ -17,6 +22,8 @@ def run(connection, **params):
     response = connection.run_query(q)
 
     lookup = response.json()
+
+
     matches = {}
     for listing in lookup['results']['bindings']:
         issn = parse_json(listing, 'issn')
