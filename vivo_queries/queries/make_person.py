@@ -26,6 +26,9 @@ def fill_params(connection, **params):
     if params['Author'].title:
         params['title_id'] = connection.gen_n()
 
+    params['Author'].vcard = params['vcard']
+    params['Author'].name_id = params['name_id']
+
     return params
 
 def get_triples(api):

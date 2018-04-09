@@ -4,6 +4,7 @@ from vivo_queries.vdos.article import Article
 from vivo_queries.vdos.author import Author
 from vivo_queries.vdos.journal import Journal
 
+
 def get_params(connection):
     author = Author(connection)
     article = Article(connection)
@@ -12,6 +13,7 @@ def get_params(connection):
     params = {'Author': author, 'Article': article, 'Journal': journal}
     
     return params
+
 
 def fill_params(connection, **params):
     params['Article'].create_n()
@@ -25,12 +27,13 @@ def fill_params(connection, **params):
         params['Article'].final_check(year_id)
         params['year'] = year_id
 
-    #make sure none of the n numbers generated before inserting triples have repeating n numbers
+    # make sure none of the n numbers generated before inserting triples have repeating n numbers
     params['Article'].final_check(relationship_id)
     params['Journal'].final_check(relationship_id)
     params['Article'].final_check(params['Journal'].n_number)
 
     return params
+
 
 def get_triples(api):
     triples = """\
@@ -98,6 +101,7 @@ def get_triples(api):
         trips = Environment().from_string(triples)
         return trips
 
+
 def run(connection, **params):
     params = fill_params(connection, **params)
     q = get_triples(True)
@@ -105,6 +109,7 @@ def run(connection, **params):
     print('=' * 20 + "\nAdding article\n" + '=' * 20)
     response = connection.run_update(q.render(**params))
     return response
+
 
 def write_rdf(connection, **params):
     params = fill_params(connection, **params)
