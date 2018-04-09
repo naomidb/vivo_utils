@@ -10,6 +10,7 @@ def get_query(**params):
     params['Thing'].extra = params['Thing'].extra.replace('(', '\\\(')
     params['Thing'].extra = params['Thing'].extra.replace(')', '\\\)')
     params['Thing'].extra = params['Thing'].extra.replace('[', '\\\[')
+    params['Thing'].extra = params['Thing'].extra.replace('+', '\\\+')
     
     query = """SELECT ?uri ?issn WHERE {{?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/Journal> . ?uri <http://purl.org/ontology/bibo/issn> ?issn . FILTER (regex (?issn, "{}")) }}""".format(params['Thing'].extra)
 

@@ -10,6 +10,7 @@ def get_query(**params):
     params['Thing'].extra = params['Thing'].extra.replace('(', '\\\(')
     params['Thing'].extra = params['Thing'].extra.replace(')', '\\\)')
     params['Thing'].extra = params['Thing'].extra.replace('[', '\\\[')
+    params['Thing'].extra = params['Thing'].extra.replace('+', '\\\+')
 
     query = """SELECT ?uri ?doi WHERE {{?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/AcademicArticle> . ?uri <http://purl.org/ontology/bibo/doi> ?doi . FILTER (regex (?doi, "{}")) }}""".format(params['Thing'].extra)
 
