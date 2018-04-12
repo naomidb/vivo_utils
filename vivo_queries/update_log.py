@@ -7,9 +7,18 @@ class UpdateLog(object):
         self.journals = []
         self.publishers = []
         self.skips = {}
+        self.ambiguities = {}
 
     def add_to_log(self, collection, label, uri):
         getattr(self, collection).append((label, uri))
+
+    def track_ambiguities(self, label, ids):
+        if label not in self.ambiguities.keys():
+            self.ambiguities[label] = ids
+
+    def add_n_to_ambiguities(self, label, number):
+        if label in self.ambiguities.keys():
+            self.ambiguities[label].append(number)
 
     def track_skips(self, pub_id, pub_type, **params):     
         if pub_id not in self.skips.keys():
@@ -27,6 +36,11 @@ class UpdateLog(object):
         if author not in self.skips[pub_id]['authors']:
             self.skips[pub_id]['authors'].append(author)
 
+    def write_disam_file(self, filepath):
+        if self.ambiguities:
+            with open(filepath, 'w') as ambfile:
+                json.dump(self.ambiguities, ambfile)
+
     def write_skips(self, filepath):
         if self.skips:
             with open(filepath, 'w') as skipfile:
@@ -38,7 +52,7 @@ class UpdateLog(object):
             created = True
             with open(filepath, 'w') as msg:
                 msg.write('New publications: \n')
-                if self.article:
+                if self.articles:
                     for pub in self.articles:
                         msg.write(pub[0] + '   ---   ' + pub[1] + '\n')
 
