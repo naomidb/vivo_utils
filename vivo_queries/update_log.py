@@ -20,19 +20,6 @@ class UpdateLog(object):
         if label in self.ambiguities.keys():
             self.ambiguities[label].append(number)
 
-<<<<<<< HEAD
-    def track_skips(self, pub_id, pub_type, **params):
-        if pub_id not in self.skips.keys():
-            self.skips[pub_id] = {'pubmed type': pub_type,
-                                  'doi': params['Article'].doi,
-                                  'title': params['Article'].name,
-                                  'volume': params['Article'].volume,
-                                  'issue': params['Article'].issue,
-                                  'start': params['Article'].start_page,
-                                  'end': params['Article'].end_page,
-                                  'journal': params['Journal'].n_number,
-                                  'authors': []}
-=======
     def track_skips(self, pub_id, pub_type, **params):     
         if pub_id not in self.skips.keys():
             self.skips[pub_id] = {'pubmed type': pub_type,
@@ -44,7 +31,6 @@ class UpdateLog(object):
                                             'end': params['Article'].end_page,
                                             'journal': params['Journal'].n_number,
                                             'authors': []}
->>>>>>> origin/develop
 
     def add_author_to_skips(self, pub_id, author):
         if author not in self.skips[pub_id]['authors']:
@@ -85,8 +71,4 @@ class UpdateLog(object):
                     for person in self.authors:
                         msg.write(person[0] + '   ---   ' + person[1] + '\n')
 
-<<<<<<< HEAD
         return created
-=======
-        return created
->>>>>>> origin/develop
