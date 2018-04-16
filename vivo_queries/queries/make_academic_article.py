@@ -27,9 +27,8 @@ def fill_params(connection, **params):
 
     # make sure none of the n numbers generated before inserting triples have repeating n numbers
     params['Article'].final_check(relationship_id)
-    if params['Journal'] is not None:
-        params['Journal'].final_check(relationship_id)
-        params['Article'].final_check(params['Journal'].n_number)
+    params['Journal'].final_check(relationship_id)
+    params['Article'].final_check(params['Journal'].n_number)
 
     return params
 

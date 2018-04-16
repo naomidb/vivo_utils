@@ -8,13 +8,13 @@ def get_params(connection):
     params = {'Organization': organization}
     return params
 
+
 def fill_params(connection, **params):
 
-
     params['upload_url'] = connection.vivo_url
-
     params['Organization'].n_number = connection.gen_n()
     return params
+
 
 def get_triples():
     triples = """\
@@ -33,6 +33,7 @@ def get_triples():
         """.format(TRIPS=triples)
     trips = Environment().from_string(api_trip)
     return trips
+
 
 def run(connection, **params):
 

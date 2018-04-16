@@ -9,4 +9,4 @@ class Contributor(VivoDomainObject):
 
         self.n_number = None
         self.person_id = None
-        self.details = ['name', 'type']
+        self.details = ['name', 'type', 'first', 'middle', 'last']

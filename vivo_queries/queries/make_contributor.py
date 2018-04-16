@@ -4,6 +4,7 @@ from vivo_queries.vdos.author import Author
 from vivo_queries.vdos.contributor import Contributor
 from vivo_queries.queries.get_vcard import run as get_vcard
 from vivo_queries.queries.get_name_id import run as get_name_id
+from vivo_queries.queries import make_person
 
 
 def get_params(connection):
@@ -14,6 +15,22 @@ def get_params(connection):
 
 
 def fill_params(connection, **params):
+
+    # Check if author exists
+    query = "SELECT ?n_number " \
+            "WHERE {?n_number <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> . "\
+            + "?n_number <http://www.w3.org/2000/01/rdf-schema#label> \"" + params['Contributor'].name + "\"}"
+    response = (connection.run_query(query)).json()
+
+    # Author does not exist, create one
+    if not response['results']['bindings']:
+        params['Author'].name = params['Contributor'].name
+        params['Author'].first = params['Contributor'].first
+        params['Author'].middle = params['Contributor'].middle
+        params['Author'].last = params['Contributor'].last
+
+        make_person.run(connection, **params)
+
     if not params['Author'].vcard:
         params['Author'].vcard = get_vcard(connection, **params).split("/")[-1]
         if not params['Author'].name_id:

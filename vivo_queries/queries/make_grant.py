@@ -18,6 +18,7 @@ def get_params(connection):
               'SubContractedThrough': s_department, 'AdministeredBy': organization}
     return params
 
+
 def q1_get_triples():
     triples = """\
         <{{upload_url}}{{Grant.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Grant> .
@@ -64,6 +65,7 @@ def q1_get_triples():
         """.format(TRIPS=triples)
     trips = Environment().from_string(api_trip)
     return trips
+
 
 def q2_get_triples():
     triples = """\
@@ -123,8 +125,8 @@ def q2_get_triples():
         {%- endif -%}
 
         {%- if SupportedWork.name %}
-            <{{upload_url}}{{Grant.n_number}}>	<http://vivoweb.org/ontology/core#supportedInformationResource> <{{SupportedWork.n_number}}> .
-            <{{SupportedWork.n_number}}> <http://vivoweb.org/ontology/core#informationResourceSupportedBy> <{{upload_url}}{{Grant.n_number}}> .
+            <{{upload_url}}{{Grant.n_number}}>	<http://vivoweb.org/ontology/core#supportedInformationResource> <{{upload_url}}{{SupportedWork.n_number}}> .
+            <{{upload_url}}{{SupportedWork.n_number}}> <http://vivoweb.org/ontology/core#informationResourceSupportedBy> <{{upload_url}}{{Grant.n_number}}> .
 
         {%- endif -%}
     """
@@ -138,6 +140,7 @@ def q2_get_triples():
         """.format(TRIPS=triples)
     trips = Environment().from_string(api_trip)
     return trips
+
 
 def fill_params(connection, **params):
 
@@ -173,6 +176,7 @@ def fill_params(connection, **params):
             params['Grant'].sub_grant_id = response['results']['bindings'][0]['n_number']['value']
 
     return params
+
 
 def run(connection, **params):
 
