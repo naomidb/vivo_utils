@@ -17,7 +17,10 @@ class Author(VivoDomainObject):
         self.title = None
         self.overview = None
         self.geographic_focus = None
-        self.details = ['email', 'phone', 'title']
+        # Added
+        self.vcard = None
+        self.name_id = None
+        self.details = ['name', 'first', 'middle','last', 'email', 'phone', 'title']
         self.extra = ['overview', 'geographic_focus']
 
     def lookup(self, connection):

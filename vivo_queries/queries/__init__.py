@@ -26,3 +26,16 @@ import vivo_queries.queries.make_letter
 import vivo_queries.queries.make_person
 import vivo_queries.queries.make_publisher
 import vivo_queries.queries.merge_entities
+import vivo_queries.queries.make_contributor
+import vivo_queries.queries.make_department
+import vivo_queries.queries.make_grant
+import vivo_queries.queries.make_organization
+import vivo_queries.queries.merge_entities
+import vivo_queries.queries.get_name_id
+import vivo_queries.queries.get_contributor_list
+import vivo_queries.queries.get_department_list
+import vivo_queries.queries.get_grant_list
+import vivo_queries.queries.make_contributor
+import vivo_queries.queries.make_department
+import vivo_queries.queries.make_grant
+import vivo_queries.queries.make_organization
