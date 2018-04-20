@@ -7,6 +7,12 @@ from vivo_queries.vdos.organization import Organization
 
 
 def get_params(connection):
+    """
+    Initializes the Grant object with the params as per the structure of the Grant. For structure of Grants,
+    visit https://github.com/roukna/owl-post/blob/develop/documents/Grant%20structure.pdf.
+    :param connection:
+    :return:
+    """
     grant = Grant(connection)
     article = Article(connection)
     pi_contributor = Contributor(connection)
@@ -20,6 +26,11 @@ def get_params(connection):
 
 
 def q1_get_triples():
+    """
+    Prepares the template for the query to load first half of the data. If we tried loading the entire data at once
+    as a part of a single query, it was throwing HTTP error. Breaking it into two parts did the work.
+    :return:
+    """
     triples = """\
         <{{upload_url}}{{Grant.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Grant> .
         <{{upload_url}}{{Grant.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Grant.name}}" .
@@ -68,6 +79,10 @@ def q1_get_triples():
 
 
 def q2_get_triples():
+    """
+    Prepares the template for the query to load second half of the data.
+    :return:
+    """
     triples = """\
         {%- if AdministeredBy.name %}
             <{{upload_url}}{{AdministeredBy.role}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#AdministratorRole> .
