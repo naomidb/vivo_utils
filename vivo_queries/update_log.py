@@ -51,23 +51,23 @@ class UpdateLog(object):
         if self.articles or self.authors or self.journals or self.publishers:
             created = True
             with open(filepath, 'w') as msg:
-                msg.write('New publications: \n')
+                msg.write('New publications: ' + str(len(self.articles)) + '\n')
                 if self.articles:
                     for pub in self.articles:
                         msg.write(pub[0] + '   ---   ' + pub[1] + '\n')
 
                 if self.publishers:
-                    msg.write('\n\nNew publishers: \n')
+                    msg.write('\n\nNew publishers: ' + str(len(self.publishers)) + '\n')
                     for publisher in self.publishers:
                         msg.write(publisher[0] + '   ---   ' + publisher[1] + '\n')
 
                 if self.journals:
-                    msg.write('\n\nNew journals: \n')
+                    msg.write('\n\nNew journals: ' + str(len(self.journals)) + '\n')
                     for journal in self.journals:
                         msg.write(journal[0] + '   ---   ' + journal[1] + '\n')
 
                 if self.authors:
-                    msg.write('\n\nNew people: \n')
+                    msg.write('\n\nNew people: ' + str(len(self.authors)) + '\n')
                     for person in self.authors:
                         msg.write(person[0] + '   ---   ' + person[1] + '\n')
 
