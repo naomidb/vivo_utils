@@ -11,6 +11,9 @@ def fill_params(connection, **params):
     params['Thing'].extra = params['Thing'].extra.replace(')', '\\\)')
     params['Thing'].extra = params['Thing'].extra.replace('[', '\\\[')
     params['Thing'].extra = params['Thing'].extra.replace('+', '\\\+')
+    params['Thing'].extra = params['Thing'].extra.replace('{', '\\\{')
+    params['Thing'].extra = params['Thing'].extra.replace('}', '\\\}')
+    params['Thing'].extra = params['Thing'].extra.replace('?', '\\\?')
 
     return params
 

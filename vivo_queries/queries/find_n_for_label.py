@@ -38,6 +38,10 @@ def fill_params(connection, **params):
     params['Thing'].extra = params['Thing'].extra.replace(')', '\\\)')
     params['Thing'].extra = params['Thing'].extra.replace('[', '\\\[')
     params['Thing'].extra = params['Thing'].extra.replace('+', '\\\+')
+    params['Thing'].extra = params['Thing'].extra.replace('{', '\\\{')
+    params['Thing'].extra = params['Thing'].extra.replace('}', '\\\}')
+    params['Thing'].extra = params['Thing'].extra.replace('?', '\\\?')
+    params['Thing'].extra = params['Thing'].extra.replace('.', '')
     
     #Workaround for escaping parentheses
     # params['Thing'].extra = params['Thing'].extra.replace('(', '[(]')
