@@ -67,14 +67,15 @@ def run(connection, **params):
     print('=' * 20 + "\nFinding n number\n" + '=' * 20)
     response = connection.run_query(q)
 
-    lookup = response.json()
-
     matches = {}
-    for listing in lookup['results']['bindings']:
-        name = parse_json(listing, 'label')
-        url = parse_json(listing, 'uri')
-        url_n = url.rsplit('/', 1)[-1]
-        matches[url_n] = name
+
+    if response:
+        lookup = response.json()
+        for listing in lookup['results']['bindings']:
+            name = parse_json(listing, 'label')
+            url = parse_json(listing, 'uri')
+            url_n = url.rsplit('/', 1)[-1]
+            matches[url_n] = name
 
     return matches
 

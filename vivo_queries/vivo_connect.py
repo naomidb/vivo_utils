@@ -57,5 +57,9 @@ class Connection(object):
         }
         url = self.query_endpoint
         headers = {'Accept': 'application/sparql-results+json'}
-        response = requests.get(url, params=payload, headers=headers, verify=False)
+        try:
+            response = requests.get(url, params=payload, headers=headers, verify=False)
+        except requests.exceptions.ConnectionError as e:
+            print("Error with this query.")
+            response = None
         return response
