@@ -1,7 +1,7 @@
 from vivo_utils.vdos.thing import Thing
 
 def get_params(connection):
-    thing = Thing (connection)
+    thing = Thing(connection)
     params = {'Thing': thing,}
     return params
 
