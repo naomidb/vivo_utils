@@ -38,26 +38,26 @@ def add_authors(c, authors):
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d")
     for nnum, author in authors.items():
-        c.execute('INSERT or REPLACE INTO authors (n_num, last, first, middle, display) VALUES(?, ?, ?, ?, ?)', (((nnum,) + author + (timestamp,))))
+        c.execute('INSERT or REPLACE INTO authors (n_num, last, first, middle, display) VALUES(?, ?, ?, ?, ?, ?)', (((nnum,) + author + (timestamp,))))
 
 def add_journals(c, journals):
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d")
     for nnum, journal in journals.items():
-        c.execute('INSERT or REPLACE INTO journals (n_num, name, issn) VALUES(?, ?, ?)', (nnum, journal[0], journal[1], timestamp))
+        c.execute('INSERT or REPLACE INTO journals (n_num, name, issn) VALUES(?, ?, ?, ?)', (nnum, journal[0], journal[1], timestamp))
 
 def add_publishers(c, publishers):
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d")
     for nnum, publisher in publishers.items():
-        c.execute('INSERT or REPLACE INTO publishers (n_num, name) VALUES(?, ?)', (nnum, publisher, timestamp))
+        c.execute('INSERT or REPLACE INTO publishers (n_num, name) VALUES(?, ?, ?)', (nnum, publisher, timestamp))
 
 def add_publications(c, publications):
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d")
     for nnum, publication in publications.items():
         dataset = ()
-        c.execute('INSERT or REPLACE INTO publications (n_num, title, doi, pmid, type) VALUES(?, ?, ?, ?, ?)', (((nnum,) + publication + (timestamp,))))
+        c.execute('INSERT or REPLACE INTO publications (n_num, title, doi, pmid, type) VALUES(?, ?, ?, ?, ?, ?)', (((nnum,) + publication + (timestamp,))))
 
 def lookup(table, search, term, lenient=False):
     conn = sqlite3.connect('fake_vivo_log.db')
