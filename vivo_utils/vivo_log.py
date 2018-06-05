@@ -6,8 +6,8 @@ from vivo_utils.queries import get_journal_list
 from vivo_utils.queries import get_publisher_list
 from vivo_utils.queries import get_article_list
 
-def update_db(connection):
-    conn = sqlite3.connect('fake_vivo_log.db')
+def update_db(connection, db_name):
+    conn = sqlite3.connect(db_name)
     c = conn.cursor()
     prep_tables(c)
 
