@@ -1,8 +1,8 @@
 from bibtexparser import loads
 import xml.etree.cElementTree as ET
 
-from vivo_queries.name_cleaner import clean_name
-from vivo_queries.publication import Publication
+from vivo_utils.name_cleaner import clean_name
+from vivo_utils.publication import Publication
 from wos_connect import WOSnnection
 
 class WHandler(object):

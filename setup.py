@@ -11,6 +11,7 @@ setup(name='vivo_utils',
       install_requires=[
           'requests==2.18.4',
           'PyYAML==3.12',
-          'Jinja2==2.10'],
+          'Jinja2==2.10',
+          'bibtexparser==0.6.2'],
       )
 
