@@ -1,1 +1,1 @@
-from wos_handler import WHandler
+from vivo_utils.handlers.wos_handler import WHandler
