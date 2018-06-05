@@ -19,9 +19,10 @@ class WOSnnection(object):
 
     def get_token(self):
         response = subprocess.check_output('curl -H "Authorization: Basic {}" -d "@wos/msg.xml" -X POST "http://search.webofknowledge.com/esti/wokmws/ws/WOKMWSAuthenticate"'.format(self.credentials), shell=True)
-        print("Response: ", response)
+        res = str(response)
+        print("Response: ", res)
         try:
-            result = response[response.index("<return>")+len("<return>"):response.index("</return>")]
+            result = res[res.index("<return>")+len("<return>"):res.index("</return>")]
             print(result)
             self.token = result
         except ValueError as e:
@@ -30,11 +31,15 @@ class WOSnnection(object):
             time.sleep(60)
             self.get_token()
 
-    def run_query(self, query, start, end):
+    def run_query(self, **kwargs):
         headers = {'Cookie': 'SID=' + self.token}
-        self.params['userQuery'] = query
-        self.params['start'] = start
-        self.params['end'] = end
+        self.params['userQuery'] = kwargs['query']
+        try:
+            self.params['start'] = kwargs['start']
+            self.params['end'] = kwargs['end']
+        except KeyError as e:
+            self.params['start'] = ''
+            self.params['end'] = ''
 
 
         q = Environment().from_string("""\
@@ -87,6 +92,7 @@ class WOSnnection(object):
             results.append(result)
             try:
                 totalRecords = result[result.index("<recordsFound>")+len("<recordsFound>"):result.index("</recordsFound>")]
+                print(totalRecords)
                 if (int(self.params['firstRecord']) + 99) < int(totalRecords):
                     self.params['firstRecord'] = str(int(self.params['firstRecord']) + 100)
                 else:
