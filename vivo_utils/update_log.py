@@ -6,11 +6,56 @@ class UpdateLog(object):
         self.authors = []
         self.journals = []
         self.publishers = []
+        self.citations = {}
         self.skips = {}
         self.ambiguities = {}
 
     def add_to_log(self, collection, label, uri):
         getattr(self, collection).append((label, uri))
+
+    def add_citation(self, publication, uri):
+        citation = ''
+        names = []
+        for author in publication.authors:
+            last = rest = name = ''
+            try:
+                last, rest = author.split(', ')
+                name = last + ', ' + rest[0:1] + '.'
+            except ValueError as e:
+                name = author
+            names.append(name)
+        if names:
+            name_string = ', '.join(names)
+            if not citation.endswith('.'):
+                citation += '.'
+            name_string += ' '
+            citation = name_string
+
+        if publication.year:
+            citation += '(' + publication.year + '). '
+
+        citation += publication.title
+        if not publication.title.endswith('.'):
+            citation += '. '
+        else:
+            citation += ' '
+
+        if publication.journal:
+            citation += publication.journal
+            if publication.volume or publication.issue or publication.start_page:
+                citation += ', '
+                if publication.volume:
+                    citation += publication.volume
+                if publication.issue:
+                    citation += '(' + publication.issue + ')'
+                if publication.start_page:
+                    if not citation.endswith(', '):
+                        citation += ', '
+                    citation += publication.start_page
+                    if publication.end_page:
+                        citation += '-' + publication.end_page
+            citation += '.'
+        self.citations[uri] = citation
 
     def track_ambiguities(self, label, ids):
         if label not in self.ambiguities.keys():
@@ -71,4 +116,17 @@ class UpdateLog(object):
                     for person in self.authors:
                         msg.write(person[0] + '   ---   ' + person[1] + '\n')
 
+        with open('testing.txt', 'w') as cite:
+            json.dump(self.citations, cite)
+        return created
+
+    def create_citation_file(self, filepath):
+        created = False
+        if self.citations:
+            created = True
+            with open(filepath, 'w') as msg:
+                msg.write(str(len(self.articles)) + ' new publications.\n\n')
+                for uri, cite in self.citations.items():
+                    msg.write(cite)
+                    msg.write('\n(' + uri + ')\n\n')
         return created
