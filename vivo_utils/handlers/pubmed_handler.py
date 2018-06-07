@@ -70,13 +70,16 @@ class PHandler(object):
 
             author_dump = citation.check_key(['Article', 'AuthorList'])
             for person in author_dump:
+                lname = fname = ''
                 author = Citation(person)
                 lname = clean_name(author.check_key(['LastName']))
                 fname = clean_name(author.check_key(['ForeName']))
-                if lname or fname:
+                if lname and fname:
                     name = lname + ', ' + fname
+                elif lname:
+                    name = lname
 
-                    publication.authors.append(name)
+                publication.authors.append(name)
 
             publications.append(publication)
 
