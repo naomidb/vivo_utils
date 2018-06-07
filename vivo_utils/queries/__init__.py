@@ -22,6 +22,7 @@ import vivo_utils.queries.get_person_list
 import vivo_utils.queries.get_pmids_for_author
 import vivo_utils.queries.get_publisher_list
 import vivo_utils.queries.get_vcard
+import vivo_utils.queries.make_abstract
 import vivo_utils.queries.make_academic_article
 import vivo_utils.queries.make_editorial_article
 import vivo_utils.queries.make_journal
