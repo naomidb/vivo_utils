@@ -6,8 +6,9 @@ from vivo_utils.publication import Publication
 from vivo_utils.connections.wos_connect import WOSnnection
 
 class WHandler(object):
-    def __init__(self, credentials):
-        self.wosnnection = WOSnnection(credentials)
+    def __init__(self, credentials, connect=True):
+        if connect:
+            self.wosnnection = WOSnnection(credentials)
 
     def bib2csv(self, bib_file):
         bib_str = ""
