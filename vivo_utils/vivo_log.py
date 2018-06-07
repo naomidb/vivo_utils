@@ -74,10 +74,9 @@ def lookup(db_name, table, search, term, lenient=False):
     conn = sqlite3.connect(db_name)
     c = conn.cursor()
     if lenient:
-        query = '''SELECT * FROM {} WHERE {} like '%{}%' '''.format(table, term, search)
-    else:
-        query = '''SELECT * FROM {} WHERE {} like '{}' '''.format(table, term, search)
-    c.execute(query)
+        search = '%' + search + '%'
+    query = '''SELECT * FROM {} WHERE {} like ? '''.format(table, term)
+    c.execute(query, (search,))
     rows = c.fetchall()
     conn.close()
     return rows
