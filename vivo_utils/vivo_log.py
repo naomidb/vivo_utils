@@ -38,34 +38,45 @@ def add_authors(c, authors):
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d")
     for nnum, author in authors.items():
-        c.execute('INSERT or REPLACE INTO authors (n_num, last, first, middle, display, date_added) VALUES(?, ?, ?, ?, ?, ?)', (((nnum,) + author + (timestamp,))))
+        try:
+            c.execute('INSERT INTO authors (n_num, last, first, middle, display, date_added) VALUES(?, ?, ?, ?, ?, ?)', (((nnum,) + author + (timestamp,))))
+        except sqlite3.IntegrityError as e:
+            continue
 
 def add_journals(c, journals):
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d")
     for nnum, journal in journals.items():
-        c.execute('INSERT or REPLACE INTO journals (n_num, name, issn, date_added) VALUES(?, ?, ?, ?)', (nnum, journal[0], journal[1], timestamp))
+        try:
+            c.execute('INSERT or REPLACE INTO journals (n_num, name, issn, date_added) VALUES(?, ?, ?, ?)', (nnum, journal[0], journal[1], timestamp))
+        except sqlite3.IntegrityError as e:
+            continue
 
 def add_publishers(c, publishers):
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d")
     for nnum, publisher in publishers.items():
-        c.execute('INSERT or REPLACE INTO publishers (n_num, name, date_added) VALUES(?, ?, ?)', (nnum, publisher, timestamp))
+        try:
+            c.execute('INSERT or REPLACE INTO publishers (n_num, name, date_added) VALUES(?, ?, ?)', (nnum, publisher, timestamp))
+        except sqlite3.IntegrityError as e:
+            continue
 
 def add_publications(c, publications):
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d")
     for nnum, publication in publications.items():
-        dataset = ()
-        c.execute('INSERT or REPLACE INTO publications (n_num, title, doi, pmid, type, date_added) VALUES(?, ?, ?, ?, ?, ?)', (((nnum,) + publication + (timestamp,))))
+        try:
+            c.execute('INSERT or REPLACE INTO publications (n_num, title, doi, pmid, type, date_added) VALUES(?, ?, ?, ?, ?, ?)', (((nnum,) + publication + (timestamp,))))
+        except sqlite3.IntegrityError as e:
+            continue
 
-def lookup(table, search, term, lenient=False):
-    conn = sqlite3.connect('fake_vivo_log.db')
+def lookup(db_name, table, search, term, lenient=False):
+    conn = sqlite3.connect(db_name)
     c = conn.cursor()
     if lenient:
         query = '''SELECT * FROM {} WHERE {} like '%{}%' '''.format(table, term, search)
     else:
-        query = '''SELECT * FROM {} WHERE {}='{}' '''.format(table, term, search)
+        query = '''SELECT * FROM {} WHERE {} like '{}' '''.format(table, term, search)
     c.execute(query)
     rows = c.fetchall()
     conn.close()
