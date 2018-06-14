@@ -39,7 +39,7 @@ def fill_params(connection, **params):
     print(params['Author'].vcard)
     print(params['Author'].name_id)
 
-    params['upload_url'] = connection.vivo_url
+    params['namespace'] = connection.namespace
 
     params['Contributor'].n_number = connection.gen_n()
     # TODO Add URI for Investigator Role and Researcher Role
@@ -57,9 +57,9 @@ def fill_params(connection, **params):
 def get_triples():
     triples = """\
         {%- if Contributor.name %}
-            <{{upload_url}}{{Author.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Contributor.name}}"^^<http://www.w3.org/2001/XMLSchema#string> .
-            <{{upload_url}}{{Contributor.n_number}}> <http://purl.obolibrary.org/obo/ARG_2000028> <{{upload_url}}{{Author.vcard}}> .
-            <{{upload_url}}{{Contributor.n_number}}> <http://purl.obolibrary.org/obo/RO_0000053> <{{upload_url}}{{Author.name_id}}> .
+            <{{namespace}}{{Author.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Contributor.name}}"^^<http://www.w3.org/2001/XMLSchema#string> .
+            <{{namespace}}{{Contributor.n_number}}> <http://purl.obolibrary.org/obo/ARG_2000028> <{{namespace}}{{Author.vcard}}> .
+            <{{namespace}}{{Contributor.n_number}}> <http://purl.obolibrary.org/obo/RO_0000053> <{{namespace}}{{Author.name_id}}> .
         {%- endif -%}
     """
 

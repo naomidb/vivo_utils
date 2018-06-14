@@ -8,8 +8,8 @@ def get_params(connection):
     return params
 
 def fill_params(connection, **params):
-    params['author_url'] = connection.vivo_url + params['Author'].n_number
-    params['article_url'] = connection.vivo_url + params['Article'].n_number
+    params['author_url'] = connection.namespace + params['Author'].n_number
+    params['article_url'] = connection.namespace + params['Article'].n_number
 
     return params
 

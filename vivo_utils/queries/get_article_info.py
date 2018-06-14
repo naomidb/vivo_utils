@@ -6,7 +6,7 @@ def get_params(connection):
     return params
 
 def fill_params(connection, **params):
-    params['subj'] = connection.vivo_url + params['Article'].n_number
+    params['subj'] = connection.namespace + params['Article'].n_number
 
     return params
 

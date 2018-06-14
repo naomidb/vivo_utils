@@ -6,19 +6,19 @@ def get_params(connection):
     return params
 
 def fill_params(connection, **params):
-    params['url'] = connection.vivo_url
+    params['namespace'] = connection.namespace
 
     return params
 
 def get_query(stage, **params):
     if stage == 1:
-        query = """ SELECT ?label ?article WHERE {{<{}{}> <http://vivoweb.org/ontology/core#relatedBy> ?relation . ?relation <http://vivoweb.org/ontology/core#relates> ?article . ?article <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/AcademicArticle> . ?article <http://www.w3.org/2000/01/rdf-schema#label> ?label . }} """.format(params['url'], params['Author'].n_number)
+        query = """ SELECT ?label ?article WHERE {{<{}{}> <http://vivoweb.org/ontology/core#relatedBy> ?relation . ?relation <http://vivoweb.org/ontology/core#relates> ?article . ?article <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/AcademicArticle> . ?article <http://www.w3.org/2000/01/rdf-schema#label> ?label . }} """.format(params['namespace'], params['Author'].n_number)
 
     if stage == 2:
-        query = """ SELECT ?year WHERE {{<{}{}> <http://vivoweb.org/ontology/core#dateTimeValue> ?duri . ?duri <http://vivoweb.org/ontology/core#dateTime> ?year .}}""".format(params['url'], params['pub_n'])
+        query = """ SELECT ?year WHERE {{<{}{}> <http://vivoweb.org/ontology/core#dateTimeValue> ?duri . ?duri <http://vivoweb.org/ontology/core#dateTime> ?year .}}""".format(params['namespace'], params['pub_n'])
 
     if stage == 3:
-        query = """ SELECT ?label WHERE {{<{}{}> <http://vivoweb.org/ontology/core#hasPublicationVenue> ?puri . ?puri <http://www.w3.org/2000/01/rdf-schema#label> ?label .}}""".format(params['url'], params['pub_n'])
+        query = """ SELECT ?label WHERE {{<{}{}> <http://vivoweb.org/ontology/core#hasPublicationVenue> ?puri . ?puri <http://www.w3.org/2000/01/rdf-schema#label> ?label .}}""".format(params['namespace'], params['pub_n'])
 
     return query
 

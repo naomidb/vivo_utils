@@ -8,7 +8,7 @@ def get_params(connection):
 
 
 def fill_params(connection, **params):
-    params['subj'] = connection.vivo_url + params['Author'].vcard
+    params['subj'] = connection.namespace + params['Author'].vcard
 
     return params
 

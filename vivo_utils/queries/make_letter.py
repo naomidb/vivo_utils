@@ -16,7 +16,7 @@ def fill_params(connection, **params):
     params['Article'].create_n()
     relationship_id = connection.gen_n()
     params['relationship'] = relationship_id
-    params['upload_url'] = connection.vivo_url
+    params['namespace'] = connection.namespace
 
     year_id = None
     if params['Article'].publication_year:
@@ -32,50 +32,50 @@ def fill_params(connection, **params):
 
 def get_triples(api):
     triples = """\
-<{{upload_url}}{{ Article.n_number }}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/Letter>  .
-<{{upload_url}}{{ Article.n_number }}> <http://www.w3.org/2000/01/rdf-schema#label> "{{ Article.name }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{ Article.n_number }}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/Letter>  .
+<{{namespace}}{{ Article.n_number }}> <http://www.w3.org/2000/01/rdf-schema#label> "{{ Article.name }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 
 {%- if Article.volume %}
-<{{upload_url}}{{ Article.n_number }}> <http://purl.org/ontology/bibo/volume> "{{ Article.volume }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{ Article.n_number }}> <http://purl.org/ontology/bibo/volume> "{{ Article.volume }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
 
 {%- if Article.issue %}
-<{{upload_url}}{{ Article.n_number }}> <http://purl.org/ontology/bibo/issue> "{{ Article.issue }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{ Article.n_number }}> <http://purl.org/ontology/bibo/issue> "{{ Article.issue }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
  
 {%- if Article.start_page %}
-<{{upload_url}}{{ Article.n_number }}> <http://purl.org/ontology/bibo/pageStart> "{{ Article.start_page }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{ Article.n_number }}> <http://purl.org/ontology/bibo/pageStart> "{{ Article.start_page }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
 
 {%- if Article.end_page %}
-<{{upload_url}}{{ Article.n_number }}> <http://purl.org/ontology/bibo/pageEnd> "{{ Article.end_page }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{ Article.n_number }}> <http://purl.org/ontology/bibo/pageEnd> "{{ Article.end_page }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
 
 {%- if Article.publication_year %}
-<{{upload_url}}{{ Article.n_number }}> <http://vivoweb.org/ontology/core#dateTimeValue> <{{upload_url}}{{ year }}> .
-<{{upload_url}}{{ year }}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#DateTimeValue> .
-<{{upload_url}}{{ year }}> <http://vivoweb.org/ontology/core#dateTime> "{{ Article.publication_year }}-01-01T00:00:00" .
-<{{upload_url}}{{ year }}> <http://vivoweb.org/ontology/core#dateTimePrecision> <http://vivoweb.org/ontology/core#yearPrecision> .
+<{{namespace}}{{ Article.n_number }}> <http://vivoweb.org/ontology/core#dateTimeValue> <{{namespace}}{{ year }}> .
+<{{namespace}}{{ year }}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#DateTimeValue> .
+<{{namespace}}{{ year }}> <http://vivoweb.org/ontology/core#dateTime> "{{ Article.publication_year }}-01-01T00:00:00" .
+<{{namespace}}{{ year }}> <http://vivoweb.org/ontology/core#dateTimePrecision> <http://vivoweb.org/ontology/core#yearPrecision> .
 {%- endif -%}
 
 {%- if Article.doi %}
-<{{upload_url}}{{Article.n_number}}> <http://purl.org/ontology/bibo/doi> "{{ Article.doi }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{Article.n_number}}> <http://purl.org/ontology/bibo/doi> "{{ Article.doi }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
 
 {%- if Article.pmid %}
-<{{upload_url}}{{Article.n_number}}> <http://purl.org/ontology/bibo/pmid> "{{ Article.pmid }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{Article.n_number}}> <http://purl.org/ontology/bibo/pmid> "{{ Article.pmid }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
   
 {%- if Author.n_number %}
-<{{upload_url}}{{ relationship }}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Authorship>  .
-<{{upload_url}}{{ relationship }}> <http://vivoweb.org/ontology/core#relates> <{{upload_url}}{{ Article.n_number }}> .
-<{{upload_url}}{{ relationship }}> <http://vivoweb.org/ontology/core#relates> <{{upload_url}}{{ Author.n_number }}> .
-<{{upload_url}}{{ Article.n_number }}> <http://vivoweb.org/ontology/core#relatedBy> <{{upload_url}}{{ relationship }}> .
+<{{namespace}}{{ relationship }}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Authorship>  .
+<{{namespace}}{{ relationship }}> <http://vivoweb.org/ontology/core#relates> <{{namespace}}{{ Article.n_number }}> .
+<{{namespace}}{{ relationship }}> <http://vivoweb.org/ontology/core#relates> <{{namespace}}{{ Author.n_number }}> .
+<{{namespace}}{{ Article.n_number }}> <http://vivoweb.org/ontology/core#relatedBy> <{{namespace}}{{ relationship }}> .
 {%- endif -%}
 
 {%- if Journal.n_number %}
-<{{upload_url}}{{ Article.n_number }}> <http://vivoweb.org/ontology/core#hasPublicationVenue> <{{upload_url}}{{ Journal.n_number }}> .
-<{{upload_url}}{{ Journal.n_number }}> <http://vivoweb.org/ontology/core#publicationVenueFor> <{{upload_url}}{{ Article.n_number }}> .
+<{{namespace}}{{ Article.n_number }}> <http://vivoweb.org/ontology/core#hasPublicationVenue> <{{namespace}}{{ Journal.n_number }}> .
+<{{namespace}}{{ Journal.n_number }}> <http://vivoweb.org/ontology/core#publicationVenueFor> <{{namespace}}{{ Article.n_number }}> .
 {%- endif %}
 """
 

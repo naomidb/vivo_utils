@@ -14,7 +14,7 @@ def fill_params(connection, **params):
 
     params['Author'].create_n()
 
-    params['upload_url'] = connection.vivo_url
+    params['namespace'] = connection.namespace
 
     params['vcard'] = connection.gen_n()
 
@@ -37,50 +37,50 @@ def fill_params(connection, **params):
 
 def get_triples(api):
   triples = """\
-<{{upload_url}}{{Author.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .
-<{{upload_url}}{{Author.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Author.name}}"^^<http://www.w3.org/2001/XMLSchema#string> .
-<{{upload_url}}{{Author.n_number}}> <http://purl.obolibrary.org/obo/ARG_2000028> <{{upload_url}}{{vcard}}> .
-<{{upload_url}}{{vcard}}> <http://purl.obolibrary.org/obo/ARG_2000029> <{{upload_url}}{{Author.n_number}}> .
-<{{upload_url}}{{vcard}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2006/vcard/ns#Individual> .
+<{{namespace}}{{Author.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .
+<{{namespace}}{{Author.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Author.name}}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{Author.n_number}}> <http://purl.obolibrary.org/obo/ARG_2000028> <{{namespace}}{{vcard}}> .
+<{{namespace}}{{vcard}}> <http://purl.obolibrary.org/obo/ARG_2000029> <{{namespace}}{{Author.n_number}}> .
+<{{namespace}}{{vcard}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2006/vcard/ns#Individual> .
 
 {%- if Author.name %}
-<{{upload_url}}{{vcard}}> <http://www.w3.org/2006/vcard/ns#hasName> <{{upload_url}}{{name_id}}> .
-<{{upload_url}}{{name_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2006/vcard/ns#Name> .
+<{{namespace}}{{vcard}}> <http://www.w3.org/2006/vcard/ns#hasName> <{{namespace}}{{name_id}}> .
+<{{namespace}}{{name_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2006/vcard/ns#Name> .
 {%- endif -%}
 
 {%- if Author.first %}
-<{{upload_url}}{{name_id}}> <http://www.w3.org/2006/vcard/ns#givenName> "{{Author.first}}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{name_id}}> <http://www.w3.org/2006/vcard/ns#givenName> "{{Author.first}}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
 
 {%- if Author.middle %}
-<{{upload_url}}{{name_id}}> <http://vivoweb.org/ontology/core#middleName> "{{Author.middle}}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{name_id}}> <http://vivoweb.org/ontology/core#middleName> "{{Author.middle}}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
 
 {%- if Author.last %}
-<{{upload_url}}{{name_id}}> <http://www.w3.org/2006/vcard/ns#familyName> "{{Author.last}}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{name_id}}> <http://www.w3.org/2006/vcard/ns#familyName> "{{Author.last}}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
 
 {%- if Author.email %}
-<{{upload_url}}{{vcard}}> <http://www.w3.org/2006/vcard/ns#hasEmail> <{{upload_url}}{{email_id}}> .
-<{{upload_url}}{{email_id}}> <http://www.w3.org/2006/vcard/ns#email> "{{Author.email}}"^^<http://www.w3.org/2001/XMLSchema#string> .
-<{{upload_url}}{{email_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2006/vcard/ns#Email> .
-<{{upload_url}}{{email_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2006/vcard/ns#Work> .
+<{{namespace}}{{vcard}}> <http://www.w3.org/2006/vcard/ns#hasEmail> <{{namespace}}{{email_id}}> .
+<{{namespace}}{{email_id}}> <http://www.w3.org/2006/vcard/ns#email> "{{Author.email}}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{email_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2006/vcard/ns#Email> .
+<{{namespace}}{{email_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2006/vcard/ns#Work> .
 {%- endif -%}
 
 {%- if Author.phone %}
-<{{upload_url}}{{vcard}}> <http://www.w3.org/2006/vcard/ns#hasTelephone> <{{upload_url}}{{phone_id}}> .
-<{{upload_url}}{{phone_id}}> <http://www.w3.org/2006/vcard/ns#telephone> "{{Author.phone}}"^^<http://www.w3.org/2001/XMLSchema#string> .
-<{{upload_url}}{{phone_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2006/vcard/ns#Telephone> .
+<{{namespace}}{{vcard}}> <http://www.w3.org/2006/vcard/ns#hasTelephone> <{{namespace}}{{phone_id}}> .
+<{{namespace}}{{phone_id}}> <http://www.w3.org/2006/vcard/ns#telephone> "{{Author.phone}}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{phone_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2006/vcard/ns#Telephone> .
 {%- endif -%}
 
 {%- if Author.title %}
-<{{upload_url}}{{vcard}}> <http://www.w3.org/2006/vcard/ns#hasTitle> <{{upload_url}}{{title_id}}> .
-<{{upload_url}}{{title_id}}> <http://www.w3.org/2006/vcard/ns#title> "{{Author.title}}"^^<http://www.w3.org/2001/XMLSchema#string> .
-<{{upload_url}}{{title_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2006/vcard/ns#Title> .
+<{{namespace}}{{vcard}}> <http://www.w3.org/2006/vcard/ns#hasTitle> <{{namespace}}{{title_id}}> .
+<{{namespace}}{{title_id}}> <http://www.w3.org/2006/vcard/ns#title> "{{Author.title}}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{title_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2006/vcard/ns#Title> .
 {%- endif -%}
 
 {%- if Author.orcid %}
-<{{upload_url}}{{Author.n_number}}> <http://vivoweb.org/ontology/core#orcidId> "{{Author.orcid}}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{Author.n_number}}> <http://vivoweb.org/ontology/core#orcidId> "{{Author.orcid}}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif %}
 """
 

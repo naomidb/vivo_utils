@@ -12,9 +12,9 @@ def fill_params(connection, **params):
     if not params['Author'].n_number:
         make_person.run(connection, **params)
     params['relationship_id'] = connection.gen_n()
-    params['relation_url'] = connection.vivo_url + params['relationship_id']
-    params['article_url'] = connection.vivo_url + params['Article'].n_number
-    params['author_url'] = connection.vivo_url + params['Author'].n_number
+    params['relation_url'] = connection.namespace + params['relationship_id']
+    params['article_url'] = connection.namespace + params['Article'].n_number
+    params['author_url'] = connection.namespace + params['Author'].n_number
 
     return params
 

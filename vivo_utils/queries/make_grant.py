@@ -32,38 +32,38 @@ def q1_get_triples():
     :return:
     """
     triples = """\
-        <{{upload_url}}{{Grant.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Grant> .
-        <{{upload_url}}{{Grant.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Grant.name}}" .
+        <{{namespace}}{{Grant.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Grant> .
+        <{{namespace}}{{Grant.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Grant.name}}" .
 
         {%- if Grant.abstract %}
-              <{{upload_url}}{{Grant.n_number}}> <http://purl.org/ontology/bibo/abstract> "{{Grant.abstract}}" .
+              <{{namespace}}{{Grant.n_number}}> <http://purl.org/ontology/bibo/abstract> "{{Grant.abstract}}" .
         {%- endif -%}
 
         {%- if Grant.end_date %}
-            <{{upload_url}}{{end_date_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#DateTimeValue> .
-            <{{upload_url}}{{end_date_id}}> <http://vivoweb.org/ontology/core#dateTime> "{{Grant.end_date}}" .
-            <{{upload_url}}{{end_date_id}}> <http://vivoweb.org/ontology/core#dateTimePrecision> <http://vivoweb.org/ontology/core#yearMonthDayPrecision> .
-            <{{upload_url}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#dateTimeInterval> <{{upload_url}}{{date_time_interval_id}}> .
-            <{{upload_url}}{{date_time_interval_id}}> <http://vivoweb.org/ontology/core#end> <{{upload_url}}{{end_date_id}}> .
-            <{{upload_url}}{{date_time_interval_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#DateTimeInterval> .
+            <{{namespace}}{{end_date_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#DateTimeValue> .
+            <{{namespace}}{{end_date_id}}> <http://vivoweb.org/ontology/core#dateTime> "{{Grant.end_date}}" .
+            <{{namespace}}{{end_date_id}}> <http://vivoweb.org/ontology/core#dateTimePrecision> <http://vivoweb.org/ontology/core#yearMonthDayPrecision> .
+            <{{namespace}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#dateTimeInterval> <{{namespace}}{{date_time_interval_id}}> .
+            <{{namespace}}{{date_time_interval_id}}> <http://vivoweb.org/ontology/core#end> <{{namespace}}{{end_date_id}}> .
+            <{{namespace}}{{date_time_interval_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#DateTimeInterval> .
         {%- endif -%}
 
         {%- if Grant.start_date %}
-            <{{upload_url}}{{start_date_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#DateTimeValue> .
-            <{{upload_url}}{{start_date_id}}> <http://vivoweb.org/ontology/core#dateTime> "{{Grant.start_date}}" .
-            <{{upload_url}}{{start_date_id}}> <http://vivoweb.org/ontology/core#dateTimePrecision> <http://vivoweb.org/ontology/core#yearMonthDayPrecision> .
-            <{{upload_url}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#dateTimeInterval> <{{upload_url}}{{date_time_interval_id}}> .
-            <{{upload_url}}{{date_time_interval_id}}> <http://vivoweb.org/ontology/core#start> <{{upload_url}}{{start_date_id}}> .
-            <{{upload_url}}{{date_time_interval_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#DateTimeInterval> .
+            <{{namespace}}{{start_date_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#DateTimeValue> .
+            <{{namespace}}{{start_date_id}}> <http://vivoweb.org/ontology/core#dateTime> "{{Grant.start_date}}" .
+            <{{namespace}}{{start_date_id}}> <http://vivoweb.org/ontology/core#dateTimePrecision> <http://vivoweb.org/ontology/core#yearMonthDayPrecision> .
+            <{{namespace}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#dateTimeInterval> <{{namespace}}{{date_time_interval_id}}> .
+            <{{namespace}}{{date_time_interval_id}}> <http://vivoweb.org/ontology/core#start> <{{namespace}}{{start_date_id}}> .
+            <{{namespace}}{{date_time_interval_id}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#DateTimeInterval> .
         {%- endif -%}
 
         {%- if AwardingDepartment.name %}
-            <{{upload_url}}{{AwardingDepartment.n_number}}> <http://vivoweb.org/ontology/core#assigns> <{{upload_url}}{{Grant.n_number}}> .
+            <{{namespace}}{{AwardingDepartment.n_number}}> <http://vivoweb.org/ontology/core#assigns> <{{namespace}}{{Grant.n_number}}> .
         {%- endif -%}
 
         {%- if SubContractedThrough.name %}
-            <{{upload_url}}{{Grant.n_number}}>	<http://vivoweb.org/ontology/core#grantSubcontractedThrough> <{{upload_url}}{{SubContractedThrough.n_number}}> .
-            <{{upload_url}}{{SubContractedThrough.n_number}}> <http://vivoweb.org/ontology/core#subcontractsGrant> <{{upload_url}}{{Grant.n_number}}> .
+            <{{namespace}}{{Grant.n_number}}>	<http://vivoweb.org/ontology/core#grantSubcontractedThrough> <{{namespace}}{{SubContractedThrough.n_number}}> .
+            <{{namespace}}{{SubContractedThrough.n_number}}> <http://vivoweb.org/ontology/core#subcontractsGrant> <{{namespace}}{{Grant.n_number}}> .
         {%- endif -%}
     """
     api_trip = """\
@@ -85,13 +85,13 @@ def q2_get_triples():
     """
     triples = """\
         {%- if AdministeredBy.name %}
-            <{{upload_url}}{{AdministeredBy.role}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#AdministratorRole> .
-            <{{upload_url}}{{AdministeredBy.role}}> <http://purl.obolibrary.org/obo/RO_0000052> <{{upload_url}}{{AdministeredBy.n_number}}> .
-            <{{upload_url}}{{AdministeredBy.n_number}}> <http://purl.obolibrary.org/obo/RO_0000053>	<{{upload_url}}{{AdministeredBy.role}}> .
-            <{{upload_url}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#relates> <{{upload_url}}{{AdministeredBy.n_number}}> .
-            <{{upload_url}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#relates> <{{upload_url}}{{AdministeredBy.role}}> .
-            <{{upload_url}}{{AdministeredBy.n_number}}>	<http://vivoweb.org/ontology/core#relatedBy> <{{upload_url}}{{Grant.n_number}}> .
-            <{{upload_url}}{{AdministeredBy.role}}> <http://vivoweb.org/ontology/core#relatedBy> <{{upload_url}}{{Grant.n_number}}> .
+            <{{namespace}}{{AdministeredBy.role}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#AdministratorRole> .
+            <{{namespace}}{{AdministeredBy.role}}> <http://purl.obolibrary.org/obo/RO_0000052> <{{namespace}}{{AdministeredBy.n_number}}> .
+            <{{namespace}}{{AdministeredBy.n_number}}> <http://purl.obolibrary.org/obo/RO_0000053>	<{{namespace}}{{AdministeredBy.role}}> .
+            <{{namespace}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#relates> <{{namespace}}{{AdministeredBy.n_number}}> .
+            <{{namespace}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#relates> <{{namespace}}{{AdministeredBy.role}}> .
+            <{{namespace}}{{AdministeredBy.n_number}}>	<http://vivoweb.org/ontology/core#relatedBy> <{{namespace}}{{Grant.n_number}}> .
+            <{{namespace}}{{AdministeredBy.role}}> <http://vivoweb.org/ontology/core#relatedBy> <{{namespace}}{{Grant.n_number}}> .
 
         {%- endif -%}
 
@@ -102,46 +102,46 @@ def q2_get_triples():
                 <{{Grant.sub_grant_id}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Grant.sub_grant_of}}" .
             {%- endif -%}
 
-            <{{upload_url}}{{Grant.n_number}}> <http://purl.obolibrary.org/obo/BFO_0000051> <{{Grant.sub_grant_id}}> .
-            <{{Grant.sub_grant_id}}> <http://purl.obolibrary.org/obo/BFO_0000050> <{{upload_url}}{{Grant.n_number}}> .
+            <{{namespace}}{{Grant.n_number}}> <http://purl.obolibrary.org/obo/BFO_0000051> <{{Grant.sub_grant_id}}> .
+            <{{Grant.sub_grant_id}}> <http://purl.obolibrary.org/obo/BFO_0000050> <{{namespace}}{{Grant.n_number}}> .
 
         {%- endif -%}
 
         {%- if Grant.total_award_amount %}
-              <{{upload_url}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#totalAwardAmount> "{{Grant.total_award_amount}}" .
+              <{{namespace}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#totalAwardAmount> "{{Grant.total_award_amount}}" .
         {%- endif -%}
 
         {%- if Grant.direct_costs %}
-              <{{upload_url}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#grantDirectCosts> "{{Grant.direct_costs}}" .
+              <{{namespace}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#grantDirectCosts> "{{Grant.direct_costs}}" .
         {%- endif -%}
 
         {%- if Grant.sponsor_award_id %}
-              <{{upload_url}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#sponsorAwardId> "{{Grant.sponsor_award_id}}" .
+              <{{namespace}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#sponsorAwardId> "{{Grant.sponsor_award_id}}" .
         {%- endif -%}
 
         {%- if Grant.direct_award_id %}
-              <{{upload_url}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#localAwardId> "{{Grant.direct_award_id}}" .
+              <{{namespace}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#localAwardId> "{{Grant.direct_award_id}}" .
         {%- endif -%}
 
         {%- if Contributor_PI.name %}
-            <{{upload_url}}{{Contributor_PI.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <{{Contributor_PI.type}}> .
-            <{{upload_url}}{{Contributor_PI.n_number}}> <http://purl.obolibrary.org/obo/RO_0000052> <{{upload_url}}{{Contributor_PI.person_id}}> .
-            <{{upload_url}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#relates> <{{upload_url}}{{Contributor_PI.person_id}}> .
-            <{{upload_url}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#relates> <{{upload_url}}{{Contributor_PI.n_number}}> .
-            <{{upload_url}}{{Contributor_PI.n_number}}> <http://vivoweb.org/ontology/core#relatedBy> <{{upload_url}}{{Grant.n_number}}> .
+            <{{namespace}}{{Contributor_PI.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <{{Contributor_PI.type}}> .
+            <{{namespace}}{{Contributor_PI.n_number}}> <http://purl.obolibrary.org/obo/RO_0000052> <{{namespace}}{{Contributor_PI.person_id}}> .
+            <{{namespace}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#relates> <{{namespace}}{{Contributor_PI.person_id}}> .
+            <{{namespace}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#relates> <{{namespace}}{{Contributor_PI.n_number}}> .
+            <{{namespace}}{{Contributor_PI.n_number}}> <http://vivoweb.org/ontology/core#relatedBy> <{{namespace}}{{Grant.n_number}}> .
         {%- endif -%}
 
         {%- if Contributor_CoPI.name %}
-            <{{upload_url}}{{Contributor_CoPI.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <{{Contributor_CoPI.type}}> .
-            <{{upload_url}}{{Contributor_CoPI.n_number}}> <http://purl.obolibrary.org/obo/RO_0000052> <{{upload_url}}{{Contributor_CoPI.person_id}}> .
-            <{{upload_url}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#relates> <{{upload_url}}{{Contributor_CoPI.person_id}}> .
-            <{{upload_url}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#relates> <{{upload_url}}{{Contributor_CoPI.n_number}}> .
-            <{{upload_url}}{{Contributor_CoPI.n_number}}> <http://vivoweb.org/ontology/core#relatedBy> <{{upload_url}}{{Grant.n_number}}> .
+            <{{namespace}}{{Contributor_CoPI.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <{{Contributor_CoPI.type}}> .
+            <{{namespace}}{{Contributor_CoPI.n_number}}> <http://purl.obolibrary.org/obo/RO_0000052> <{{namespace}}{{Contributor_CoPI.person_id}}> .
+            <{{namespace}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#relates> <{{namespace}}{{Contributor_CoPI.person_id}}> .
+            <{{namespace}}{{Grant.n_number}}> <http://vivoweb.org/ontology/core#relates> <{{namespace}}{{Contributor_CoPI.n_number}}> .
+            <{{namespace}}{{Contributor_CoPI.n_number}}> <http://vivoweb.org/ontology/core#relatedBy> <{{namespace}}{{Grant.n_number}}> .
         {%- endif -%}
 
         {%- if SupportedWork.name %}
-            <{{upload_url}}{{Grant.n_number}}>	<http://vivoweb.org/ontology/core#supportedInformationResource> <{{upload_url}}{{SupportedWork.n_number}}> .
-            <{{upload_url}}{{SupportedWork.n_number}}> <http://vivoweb.org/ontology/core#informationResourceSupportedBy> <{{upload_url}}{{Grant.n_number}}> .
+            <{{namespace}}{{Grant.n_number}}>	<http://vivoweb.org/ontology/core#supportedInformationResource> <{{namespace}}{{SupportedWork.n_number}}> .
+            <{{namespace}}{{SupportedWork.n_number}}> <http://vivoweb.org/ontology/core#informationResourceSupportedBy> <{{namespace}}{{Grant.n_number}}> .
 
         {%- endif -%}
     """
@@ -160,7 +160,7 @@ def q2_get_triples():
 def fill_params(connection, **params):
 
     params['Grant'].create_n()
-    params['upload_url'] = connection.vivo_url
+    params['namespace'] = connection.namespace
 
     if params['AdministeredBy']:
         params['AdministeredBy'].role = connection.gen_n()
@@ -185,7 +185,7 @@ def fill_params(connection, **params):
 
         if not response['results']['bindings']:
             params['Grant'].sub_grant_not_exists = True
-            params['Grant'].sub_grant_id = connection.vivo_url + connection.gen_n()
+            params['Grant'].sub_grant_id = connection.namespace + connection.gen_n()
         else:
             params['Grant'].sub_grant_not_exists = False
             params['Grant'].sub_grant_id = response['results']['bindings'][0]['n_number']['value']

@@ -11,7 +11,7 @@ def get_params(connection):
 
 def fill_params(connection, **params):
     journal = params.get('Journal')
-    params['upload_url'] = connection.vivo_url
+    params['namespace'] = connection.namespace
 
     journal.create_n()
     if params['Publisher'].name:
@@ -22,21 +22,21 @@ def fill_params(connection, **params):
 
 def get_triples(api):
     triples = """\
-<{{upload_url}}{{Journal.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/Journal> .
-<{{upload_url}}{{Journal.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Journal.name}}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{Journal.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/Journal> .
+<{{namespace}}{{Journal.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Journal.name}}"^^<http://www.w3.org/2001/XMLSchema#string> .
 
 {%- if Journal.issn %}
-<{{upload_url}}{{Journal.n_number}}> <http://purl.org/ontology/bibo/issn> "{{Journal.issn}}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{Journal.n_number}}> <http://purl.org/ontology/bibo/issn> "{{Journal.issn}}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
 
 {%- if Publisher.name %}
-<{{upload_url}}{{Publisher.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
-<{{upload_url}}{{Publisher.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Publisher> .
+<{{namespace}}{{Publisher.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
+<{{namespace}}{{Publisher.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Publisher> .
 {%- endif -%}
 
 {%- if Publisher.n_number %}
-<{{upload_url}}{{Publisher.n_number}}> <http://vivoweb.org/ontology/core#publisherOf> <{{upload_url}}{{Journal.n_number}}> .
-<{{upload_url}}{{Journal.n_number}}> <http://vivoweb.org/ontology/core#publisher> <{{upload_url}}{{Publisher.n_number}}> .
+<{{namespace}}{{Publisher.n_number}}> <http://vivoweb.org/ontology/core#publisherOf> <{{namespace}}{{Journal.n_number}}> .
+<{{namespace}}{{Journal.n_number}}> <http://vivoweb.org/ontology/core#publisher> <{{namespace}}{{Publisher.n_number}}> .
 {%- endif -%}         
     """
 

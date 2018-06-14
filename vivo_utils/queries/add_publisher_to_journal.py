@@ -13,8 +13,8 @@ def get_params(connection):
 def fill_params(connection, **params):
     if not params['Publisher'].n_number:
         make_publisher.run(connection, **params)
-    params['publisher_url'] = connection.vivo_url + params['Publisher'].n_number
-    params['journal_url'] = connection.vivo_url + params['Journal'].n_number
+    params['publisher_url'] = connection.namespace + params['Publisher'].n_number
+    params['journal_url'] = connection.namespace + params['Journal'].n_number
 
     return params
 

@@ -7,7 +7,7 @@ def get_params(connection):
 
 def fill_params(connection, **params):
     params['Publisher'].create_n()
-    params['publisher_url'] = connection.vivo_url + params['Publisher'].n_number
+    params['publisher_uri'] = connection.namespace + params['Publisher'].n_number
 
     return params
 
@@ -16,7 +16,7 @@ def get_triples(api, **params):
 <{PUBLISHER}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
 <{PUBLISHER}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Publisher> .
 <{PUBLISHER}> <http://www.w3.org/2000/01/rdf-schema#label> "{NAME}"^^<http://www.w3.org/2001/XMLSchema#string> .      
-    """.format(PUBLISHER = params['publisher_url'], NAME = params['Publisher'].name)
+    """.format(PUBLISHER = params['publisher_uri'], NAME = params['Publisher'].name)
 
     if api:
         api_trip = """\
