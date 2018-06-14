@@ -26,13 +26,13 @@ def update_db(connection, db_name):
 
 def prep_tables(c):
     c.execute('''create table if not exists authors
-                (n_num text unique, last text, first text, middle text, display text, date_added text)''')
+                (n_num text, last text, first text, middle text, display text, date_added text)''')
     c.execute('''create table if not exists journals
-                (n_num text unique, name text, issn text, date_added text)''')
+                (n_num text, name text, issn text, date_added text)''')
     c.execute('''create table if not exists publishers
-                (n_num text unique, name text, date_added text)''')
+                (n_num text, name text, date_added text)''')
     c.execute('''create table if not exists publications
-                (n_num text unique, title text, doi text, pmid text, type text, date_added text)''')
+                (n_num text, title text, doi text, pmid text, type text, date_added text)''')
 
 def add_authors(c, authors):
     now = datetime.datetime.now()
@@ -48,7 +48,7 @@ def add_journals(c, journals):
     timestamp = now.strftime("%Y-%m-%d")
     for nnum, journal in journals.items():
         try:
-            c.execute('INSERT or REPLACE INTO journals (n_num, name, issn, date_added) VALUES(?, ?, ?, ?)', (nnum, journal[0], journal[1], timestamp))
+            c.execute('INSERT INTO journals (n_num, name, issn, date_added) VALUES(?, ?, ?, ?)', (nnum, journal[0], journal[1], timestamp))
         except sqlite3.IntegrityError as e:
             continue
 
@@ -57,7 +57,7 @@ def add_publishers(c, publishers):
     timestamp = now.strftime("%Y-%m-%d")
     for nnum, publisher in publishers.items():
         try:
-            c.execute('INSERT or REPLACE INTO publishers (n_num, name, date_added) VALUES(?, ?, ?)', (nnum, publisher, timestamp))
+            c.execute('INSERT INTO publishers (n_num, name, date_added) VALUES(?, ?, ?)', (nnum, publisher, timestamp))
         except sqlite3.IntegrityError as e:
             continue
 
@@ -66,7 +66,7 @@ def add_publications(c, publications):
     timestamp = now.strftime("%Y-%m-%d")
     for nnum, publication in publications.items():
         try:
-            c.execute('INSERT or REPLACE INTO publications (n_num, title, doi, pmid, type, date_added) VALUES(?, ?, ?, ?, ?, ?)', (((nnum,) + publication + (timestamp,))))
+            c.execute('INSERT INTO publications (n_num, title, doi, pmid, type, date_added) VALUES(?, ?, ?, ?, ?, ?)', (((nnum,) + publication + (timestamp,))))
         except sqlite3.IntegrityError as e:
             continue
 
