@@ -5,12 +5,12 @@ from vivo_utils.queries import check_n_value
 from vivo_utils.vdos.thing import Thing
 
 class Connection(object):
-    def __init__(self, vivo_url, user, password, u_endpoint, q_endpoint):
+    def __init__(self, namespace, user, password, u_endpoint, q_endpoint):
         self.user = user
         self.password = password
         self.update_endpoint = u_endpoint
         self.query_endpoint = q_endpoint
-        self.vivo_url = vivo_url
+        self.namespace = namespace
         self.n_list = []
 
     def check_n(self, n):
