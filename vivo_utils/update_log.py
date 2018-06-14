@@ -124,9 +124,24 @@ class UpdateLog(object):
         created = False
         if self.citations:
             created = True
+            message = '''\
+                        <!DOCTYPE html>\
+                        <html>\
+                        <head>\
+                            <title>VIVO Uploads</title>\
+                        </head>\
+                        <body>'''
+            message += '<h3>' + str(len(self.articles)) + ' new publications</h3>'            
+            for uri, cite in self.citations.items():
+                message += '<p>' + cite + '</p>'
+                message += '<p>(<a href="' + uri + '" target="_blank">VIVO Entry</a>)</p>'
+            message += '''\
+                        </body>
+                        </html>'''
             with open(filepath, 'w') as msg:
-                msg.write(str(len(self.articles)) + ' new publications.\n\n')
-                for uri, cite in self.citations.items():
-                    msg.write(cite)
-                    msg.write('\n(' + uri + ')\n\n')
+                msg.write(message)
+                # msg.write(str(len(self.articles)) + ' new publications.\n\n')
+                # for uri, cite in self.citations.items():
+                #     msg.write(cite)
+                #     msg.write('\n(' + uri + ')\n\n')
         return created
