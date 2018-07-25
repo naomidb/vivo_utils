@@ -37,7 +37,7 @@ def get_triples(api):
 {%- if Publisher.n_number %}
 <{{namespace}}{{Publisher.n_number}}> <http://vivoweb.org/ontology/core#publisherOf> <{{namespace}}{{Journal.n_number}}> .
 <{{namespace}}{{Journal.n_number}}> <http://vivoweb.org/ontology/core#publisher> <{{namespace}}{{Publisher.n_number}}> .
-{%- endif -%}         
+{%- endif %}
     """
 
     if api:

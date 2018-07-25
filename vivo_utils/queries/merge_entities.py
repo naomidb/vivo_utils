@@ -18,40 +18,37 @@ def fill_params(connection, **params):
 
     return params
 
-def get_triples(api, **params):
+def get_triples(**params):
     format_triples = ""
     for trip in params['triples']:
         format_triples = format_triples + trip + " . \n"
 
-    format_triples = format_triples.encode('utf-8')
+    #format_triples = format_triples.encode('utf-8')
     format_triples = str.replace(format_triples, params['old_uri'] + ">", params['final_uri'] + ">")
 
-    if api:
-        api_trip = """\
-        INSERT DATA {{
-            GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2>
-            {{
-              {}
-            }}
+    api_trip = """\
+    INSERT DATA {{
+        GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2>
+        {{
+          {TRIPS}
         }}
-            """.format(format_triples)
+    }}
+        """.format(TRIPS=format_triples)
 
-        return api_trip
-
-    else:
-        return format_triples
+    return api_trip
 
 def run(connection, **params):
     params = fill_params(connection, **params)
-    q = get_triples(True, **params)
+    q = get_triples(**params)
 
+    if not params['triples']:
+        return
+        
     print('=' * 20 + "\nMerging\n" + '=' * 20)
     ins_response = connection.run_update(q)
     print(ins_response)
 
     #Delete if Insert is successful
-    import pdb
-    pdb.set_trace()
     merge_params = {'Thing': params['Secondary URI']}
     if ins_response.status_code == 200:
         del_response = delete_entity.run(connection, **merge_params)
