@@ -6,20 +6,29 @@ from vivo_utils.queries import get_journal_list
 from vivo_utils.queries import get_publisher_list
 from vivo_utils.queries import get_article_list
 
-def update_db(connection, db_name):
+def update_db(connection, db_name, selections):
     conn = sqlite3.connect(db_name)
     c = conn.cursor()
     prep_tables(c)
 
-    authors = get_person_list.run(connection, **{})
-    journals = get_journal_list.run(connection, **{})
-    publishers = get_publisher_list.run(connection, **{})
-    publications = get_article_list.run(connection, **{})
-
-    add_authors(c, authors)
-    add_journals(c, journals)
-    add_publishers(c, publishers)
-    add_publications(c, publications)
+    if 'authors' in selections:
+        authors = get_person_list.run(connection, **{})
+        add_authors(c, authors)
+    if 'journals' in selections:
+        journals = get_journal_list.run(connection, **{})
+        add_journals(c, journals)
+    if 'publishers' in selections:
+        publishers = get_publisher_list.run(connection, **{})
+        add_publishers(c, publishers)
+    if 'publications' in selections:
+        publications = get_article_list.run(connection, **{})
+        add_publications(c, publications)
+    if 'grants' in selections:
+        grants = get_grant_list.run(connection, **{})
+        add_grants(c, grants)
+    if 'organizations' in selections:
+        organizations = get_organization_list.run(connection, **{})
+        add_organizations(c, organizations)
 
     conn.commit()
     conn.close()
@@ -33,6 +42,10 @@ def prep_tables(c):
                 (n_num text, name text, date_added text)''')
     c.execute('''create table if not exists publications
                 (n_num text, title text, doi text, pmid text, type text, date_added text)''')
+    c.execute('''create table if not exists grants
+                (n_num text, title text, date_added text)''')
+    c.execute('''create table if not exists organizations
+                (n_num text, title text, type text, date_added text)''')
 
 def add_authors(c, authors):
     now = datetime.datetime.now()
@@ -67,6 +80,24 @@ def add_publications(c, publications):
     for nnum, publication in publications.items():
         try:
             c.execute('INSERT INTO publications (n_num, title, doi, pmid, type, date_added) VALUES(?, ?, ?, ?, ?, ?)', (((nnum,) + publication + (timestamp,))))
+        except sqlite3.IntegrityError as e:
+            continue
+
+def add_grants(c, grants):
+    now = datetime.datetime.now()
+    timestamp = now.strftime("%Y-%m-%d")
+    for nnum, grant in grants.items():
+        try:
+            c.execute('INSERT INTO grants (n_num, title, date_added) VALUES(?, ?, ?)', (nnum, grant, timestamp))
+        except sqlite3.IntegrityError as e:
+            continue
+
+def add_organizations(c, organizations):
+    now = datetime.datetime.now()
+    timestamp = now.strftime("%Y-%m-%d")
+    for nnum, org in organizations.items():
+        try:
+            c.execute('INSERT INTO organizations (n_num, title, type, date_added) VALUES(?, ?, ?)', (nnum, org, timestamp))
         except sqlite3.IntegrityError as e:
             continue
 
