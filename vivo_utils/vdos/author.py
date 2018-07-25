@@ -1,4 +1,3 @@
-import urllib
 from vivo_utils.vdos.VDO import VivoDomainObject
 
 class Author(VivoDomainObject):
@@ -30,12 +29,12 @@ class Author(VivoDomainObject):
     def lookup(self, connection):
         params = {'Author': self}
         info = get_author_info.run(connection, **params)
-        self.name = info['full name']
-        self.first = info['given name']
-        self.middle = info['middle name']
-        self.last = info['last name']
+        self.name = info['fullname']
+        self.first = info['given']
+        self.middle = info['middle']
+        self.last = info['last']
         self.email = info['email']
         self.phone = info['phone']
         self.title = info['title']
         self.overview = info['overview']
-        self.geographic_focus = info['geographic focus']
+        self.geographic_focus = info['geofocus']
