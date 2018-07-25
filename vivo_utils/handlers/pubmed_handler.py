@@ -37,9 +37,15 @@ class PHandler(object):
 
         for citing in pm_dump['PubmedArticle']:
             publication = Publication()
-
             citation = Citation(citing['MedlineCitation'])
-            publication.title = clean_name(citation.check_key(['Article', 'ArticleTitle']))
+            
+            publication.title = clean_name(citation.check_key(['Article', 'ArticleTitle'])).title()
+            publication.year = str(citation.check_key(['Article', 'Journal', 'JournalIssue', 'PubDate', 'Year']))
+            publication.volume = str(citation.check_key(['Article', 'Journal', 'JournalIssue', 'Volume']))
+            publication.issue = str(citation.check_key(['Article', 'Journal', 'JournalIssue', 'Issue']))
+            publication.pmid = str(citation.check_key(['PMID']))
+            publication.journal = clean_name(citation.check_key(['Article', 'Journal', 'Title'])).title()
+
             try:
                 count = 0
                 proto_doi = citation.check_key(['Article', 'ELocationID'])[count]
@@ -48,10 +54,8 @@ class PHandler(object):
                     proto_doi = citation.check_key(['Article', 'ELocationID'])[count]
                 publication.doi = str(proto_doi)
             except IndexError as e:
-                publcation.doi = ""
-            publication.year = str(citation.check_key(['Article', 'Journal', 'JournalIssue', 'PubDate', 'Year']))
-            publication.volume = str(citation.check_key(['Article', 'Journal', 'JournalIssue', 'Volume']))
-            publication.issue = str(citation.check_key(['Article', 'Journal', 'JournalIssue', 'Issue']))
+                publcation.doi = ''
+            
             pages = str(citation.check_key(['Article', 'Pagination', 'MedlinePgn']))
             try:
                 start, end = pages.split('-')
@@ -60,14 +64,17 @@ class PHandler(object):
                 end = ''
             publication.start_page = start
             publication.end_page = end
-            try:
-                publication.type = str(citation.check_key(['Article', 'PublicationTypeList'])[0])
-            except IndexError as e:
-                publication.type = ""
-            publication.pmid = str(citation.check_key(['PMID']))
-            publication.issn = str(citation.check_key(['Article', 'Journal', 'ISSN']))
-            publication.journal = clean_name(citation.check_key(['Article', 'Journal', 'Title']))
 
+            proto_types = citation.check_key(['Article', 'PublicationTypeList'])
+            for cat in proto_types:
+                publication.types.append(str(cat))
+
+            proto_issn = citation.check_key(['Article', 'Journal', 'ISSN'])
+            if proto_issn.attributes['IssnType'] == 'Electronic':
+                publication.eissn = str(proto_issn)
+            else:
+                publication.issn = str(proto_issn)
+            
             author_dump = citation.check_key(['Article', 'AuthorList'])
             for person in author_dump:
                 lname = fname = ''
@@ -78,8 +85,17 @@ class PHandler(object):
                     name = lname + ', ' + fname
                 elif lname:
                     name = lname
+                try:
+                    count = 0
+                    proto_orcid = author.check_key(['Identifier'])[count]
+                    while proto_orcid.attributes['Source'] != 'ORCID':
+                        count += 1
+                        proto_orcid = author.check_key(['Identifier'])[count]
+                    orcid = str(proto_orcid).split('/')[-1]
+                except IndexError as e:
+                    orcid = ''
 
-                publication.authors.append(name)
+                publication.authors[name] = orcid
 
             publications.append(publication)
 
