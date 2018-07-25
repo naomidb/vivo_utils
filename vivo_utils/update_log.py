@@ -6,6 +6,8 @@ class UpdateLog(object):
         self.authors = []
         self.journals = []
         self.publishers = []
+        self.grants = []
+        self.organizations = []
         self.citations = {}
         self.skips = {}
         self.ambiguities = {}
@@ -65,9 +67,9 @@ class UpdateLog(object):
         if label in self.ambiguities.keys():
             self.ambiguities[label].append(number)
 
-    def track_skips(self, pub_id, pub_type, **params):     
+    def track_skips(self, pub_id, pub_types, **params):     
         if pub_id not in self.skips.keys():
-            self.skips[pub_id] = {'type': pub_type,
+            self.skips[pub_id] = {'type': pub_types,
                                 'doi': params['Article'].doi,
                                 'title': params['Article'].name,
                                 'volume': params['Article'].volume,
@@ -75,11 +77,11 @@ class UpdateLog(object):
                                 'start': params['Article'].start_page,
                                 'end': params['Article'].end_page,
                                 'journal': params['Journal'].n_number,
-                                'authors': []}
+                                'authors': {}}
 
-    def add_author_to_skips(self, pub_id, author):
-        if author not in self.skips[pub_id]['authors']:
-            self.skips[pub_id]['authors'].append(author)
+    def add_author_to_skips(self, pub_id, author, orcid):
+        if author not in self.skips[pub_id]['authors'].keys():
+            self.skips[pub_id]['authors'][author] = orcid
 
     def write_disam_file(self, filepath):
         if self.ambiguities:
@@ -116,8 +118,19 @@ class UpdateLog(object):
                     for person in self.authors:
                         msg.write(person[0] + '   ---   ' + person[1] + '\n')
 
-        with open('testing.txt', 'w') as cite:
-            json.dump(self.citations, cite)
+                if self.grants:
+                    msg.write('\n\nNew grants: ' + str(len(self.grants)) + '\n')
+                    for grant in self.grants:
+                        msg.write(grant[0] + '   ---   ' + grant[1] + '\n')
+
+                if self.organizations:
+                    msg.write('\n\nNew organizations: ' + str(len(self.organizations)) + '\n')
+                    for org in self.organizations:
+                        msg.write(org[0] + '   ---   ' + org[1] + '\n')
+
+        if self.articles:
+            with open('citations.txt', 'w') as cite:
+                json.dump(self.citations, cite)
         return created
 
     def create_citation_file(self, filepath):
@@ -140,8 +153,4 @@ class UpdateLog(object):
                         </html>'''
             with open(filepath, 'w') as msg:
                 msg.write(message)
-                # msg.write(str(len(self.articles)) + ' new publications.\n\n')
-                # for uri, cite in self.citations.items():
-                #     msg.write(cite)
-                #     msg.write('\n(' + uri + ')\n\n')
         return created
