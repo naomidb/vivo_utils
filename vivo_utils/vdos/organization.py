@@ -9,5 +9,8 @@ class Organization(VivoDomainObject):
 
         self.n_number = None
         self.name = None
-        self.role = None
+        self.role = None    
         self.details = ['name']
+
+        #If type is department
+        self.dep_type = None
