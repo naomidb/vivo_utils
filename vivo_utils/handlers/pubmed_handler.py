@@ -24,8 +24,14 @@ class PHandler(object):
     def __init__(self, email):
         self.pubnnection = PUBnnection(email)
 
-    def get_data(self, query, log_file=None):
-        id_list = self.pubnnection.get_id_list(query)
+    def get_data(self, query_info, log_file=None):
+        if isinstance(query_info, str):
+            id_list = self.pubnnection.get_id_list(query_info)
+        elif isinstance(query_info, list):
+            id_list = query_info
+        else:
+            raise Exception('Error running pubmed query: check input')
+
         if log_file:
             with open(log_file, 'a+') as log:
                 log.write("\n" + '=' * 10 + "Articles found: " + str(len(id_list)) + '\n')
@@ -54,7 +60,7 @@ class PHandler(object):
                     proto_doi = citation.check_key(['Article', 'ELocationID'])[count]
                 publication.doi = str(proto_doi)
             except IndexError as e:
-                publcation.doi = ''
+                publication.doi = ''
             
             pages = str(citation.check_key(['Article', 'Pagination', 'MedlinePgn']))
             try:
