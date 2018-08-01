@@ -1,5 +1,5 @@
 from bibtexparser import loads
-import xml.etree.cElementTree as ET
+import xml.etree.ElementTree as ET
 
 from vivo_utils.name_cleaner import clean_name
 from vivo_utils.publication import Publication
