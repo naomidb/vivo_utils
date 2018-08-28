@@ -24,9 +24,17 @@ def fill_params(connection, **params):
 
 def get_triples():
     triples = """\
-        <{{namespace}}{{Department.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
-        <{{namespace}}{{Department.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <{{Department.dep_type}}> .
-        <{{namespace}}{{Department.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label>	"{{Department.name}}" .
+<{{namespace}}{{Department.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
+<{{namespace}}{{Department.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <{{Department.dep_type}}> .
+<{{namespace}}{{Department.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label>	"{{Department.name}}" .
+
+{%- if source %}
+<{{namespace}}{{Article.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/harvestedBy> "{{ source }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+{%- endif -%}
+
+{%- if harvest_date %}
+<{{namespace}}{{Article.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/dateHarvested>  "{{ harvest_date }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+{%- endif %}
     """
 
     api_trip = """\

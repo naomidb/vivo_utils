@@ -82,6 +82,22 @@ def get_triples(api):
 {%- if Author.orcid %}
 <{{namespace}}{{Author.n_number}}> <http://vivoweb.org/ontology/core#orcidId> "{{Author.orcid}}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif %}
+
+{%- if Author.ufentity %}
+<{{namespace}}{{Author.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivo.ufl.edu/ontology/vivo-ufl/UFEntity> .
+{%- endif %}
+
+{%- if Author.ufcurrententity %}
+<{{namespace}}{{Author.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivo.ufl.edu/ontology/vivo-ufl/UFCurrentEntity> .
+{%- endif -%}
+
+{%- if source %}
+<{{namespace}}{{Article.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/harvestedBy> "{{ source }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+{%- endif -%}
+
+{%- if harvest_date %}
+<{{namespace}}{{Article.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/dateHarvested>  "{{ harvest_date }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+{%- endif %}
 """
 
   if api:

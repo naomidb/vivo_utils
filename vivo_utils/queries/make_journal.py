@@ -37,6 +37,14 @@ def get_triples(api):
 {%- if Publisher.n_number %}
 <{{namespace}}{{Publisher.n_number}}> <http://vivoweb.org/ontology/core#publisherOf> <{{namespace}}{{Journal.n_number}}> .
 <{{namespace}}{{Journal.n_number}}> <http://vivoweb.org/ontology/core#publisher> <{{namespace}}{{Publisher.n_number}}> .
+{%- endif -%}
+
+{%- if source %}
+<{{namespace}}{{Article.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/harvestedBy> "{{ source }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+{%- endif -%}
+
+{%- if harvest_date %}
+<{{namespace}}{{Article.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/dateHarvested>  "{{ harvest_date }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif %}
     """
 

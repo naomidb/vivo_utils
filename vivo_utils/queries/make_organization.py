@@ -10,41 +10,66 @@ def get_params(connection):
 
 
 def fill_params(connection, **params):
-
-    params['namespace'] = connection.namespace
     params['Organization'].n_number = connection.gen_n()
+    params['org_uri'] = connection.namespace + params['Organization'].n_number
+
+    if params['Organization'].type == 'academic_dept':
+        params['Type'] = 'http://vivoweb.org/ontology/core#Department'
+        params['Dep_Type'] = 'http://vivoweb.org/ontology/core#AcademicDepartment'
+    elif params['Organization'].type == 'organization':
+        params['Type'] = 'http://xmlns.com/foaf/0.1/Organization'
+        params['Dep_Type'] = None
+
     return params
 
 
-def get_triples():
+def get_triples(api):
     triples = """\
-        <{{namespace}}{{Organization.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Organization> .
-        <{{namespace}}{{Organization.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Organization.name}}" .
-    """
+<{{org_uri}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Organization> .
+<{{org_uri}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Organization.name}}" .
+<{{org_uri}}> <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#mostSpecificType> <{{Type}}> .
 
-    api_trip = """\
-    INSERT DATA {{
+{%- if Dep_Type %}
+<{{org_uri}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <{{Dep_Type}}>
+{%- endif -%}
 
-        GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2>
-        {{
-            {TRIPS}
+{%- if source %}
+<{{namespace}}{{Article.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/harvestedBy> "{{ source }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+{%- endif -%}
+
+{%- if harvest_date %}
+<{{namespace}}{{Article.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/dateHarvested>  "{{ harvest_date }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+{%- endif %}
+"""
+
+    if api:
+        api_trip = """\
+        INSERT DATA {{
+            GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2>
+            {{
+              {TRIPS}
+            }}
         }}
-    }}
         """.format(TRIPS=triples)
-    trips = Environment().from_string(api_trip)
-    return trips
+
+        jinj_trip = Environment().from_string(api_trip)
+        return jinj_trip
+    else:
+        trips = Environment().from_string(triples)
+        return trips
 
 
 def run(connection, **params):
+    params = fill_params(connection, **params)
+    q = get_triples(True)
 
-    if params['Organization'].n_number:
-        return
-    else:
-        params = fill_params(connection, **params)
-
-    print(params['namespace'])
-    q = get_triples()
     print('=' * 20 + "\nCreating new organization\n" + '=' * 20)
     response = connection.run_update(q.render(**params))
-    print(response)
     return response
+
+def write_rdf(connection, **params):
+    params = fill_params(connection, **params)
+    q = get_triples(False)
+
+    rdf = q.render(**params)
+    return rdf
