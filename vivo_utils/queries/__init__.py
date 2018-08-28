@@ -15,9 +15,11 @@ import vivo_utils.queries.get_article_list
 import vivo_utils.queries.get_articles_for_author
 import vivo_utils.queries.get_articles_with_info
 import vivo_utils.queries.get_author_info
+import vivo_utils.queries.get_grant_list
 import vivo_utils.queries.get_journal_list
 import vivo_utils.queries.get_journal_on_pub
 import vivo_utils.queries.get_label
+import vivo_utils.queries.get_organization_list
 import vivo_utils.queries.get_person_list
 import vivo_utils.queries.get_pmids_for_author
 import vivo_utils.queries.get_publisher_list
@@ -40,6 +42,7 @@ import vivo_utils.queries.get_contributor_list
 import vivo_utils.queries.get_department_list
 import vivo_utils.queries.get_grant_list
 import vivo_utils.queries.make_contributor
+import vivo_utils.queries.make_dateTimeInterval
 import vivo_utils.queries.make_department
 import vivo_utils.queries.make_grant
 import vivo_utils.queries.make_organization
