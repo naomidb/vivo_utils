@@ -98,8 +98,8 @@ class UpdateLog(object):
         if self.articles or self.authors or self.journals or self.publishers:
             created = True
             with open(filepath, 'w') as msg:
-                msg.write('New publications: ' + str(len(self.articles)) + '\n')
                 if self.articles:
+                    msg.write('New publications: ' + str(len(self.articles)) + '\n')
                     for pub in self.articles:
                         msg.write(pub[0] + '   ---   ' + pub[1] + '\n')
 
