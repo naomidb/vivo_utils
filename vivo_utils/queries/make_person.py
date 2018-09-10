@@ -92,11 +92,11 @@ def get_triples(api):
 {%- endif -%}
 
 {%- if source %}
-<{{namespace}}{{Article.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/harvestedBy> "{{ source }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{Author.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/harvestedBy> "{{ source }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
 
 {%- if harvest_date %}
-<{{namespace}}{{Article.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/dateHarvested>  "{{ harvest_date }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{Author.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/dateHarvested>  "{{ harvest_date }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif %}
 """
 

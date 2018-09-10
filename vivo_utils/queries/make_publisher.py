@@ -21,11 +21,11 @@ def get_triples(api, **params):
 {%- endif -%}
 
 {%- if source %}
-<{{namespace}}{{Article.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/harvestedBy> "{{ source }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{Publisher.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/harvestedBy> "{{ source }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif -%}
 
 {%- if harvest_date %}
-<{{namespace}}{{Article.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/dateHarvested>  "{{ harvest_date }}"^^<http://www.w3.org/2001/XMLSchema#string> .
+<{{namespace}}{{Publisher.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/dateHarvested>  "{{ harvest_date }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif %}   
 """
 
@@ -43,7 +43,7 @@ def get_triples(api, **params):
         jinj_trip = Environment().from_string(api_trip)
         return jinj_trip
 
-  else:
+    else:
         trips = Environment().from_string(triples)
         return trips
 
