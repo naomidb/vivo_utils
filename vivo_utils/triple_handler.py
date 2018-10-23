@@ -1,11 +1,17 @@
 import sys
 
 class TripleHandler(object):
-    def __init__(self, api, connection, log_file=None):
+    def __init__(self, api, connection, meta, log_file=None):
+        '''
+        api     bool    update vivo through the api(True) or create rdf files(False)
+        meta    dict    harvest information ('source' and 'harvest_date')
+        '''
         self.api = api
         self.connection = connection
         self.triples = []
+        self.meta = meta
         self.log_file = log_file
+
 
     def search_for_label(self, label):
         for trip in self.triples:
@@ -14,6 +20,14 @@ class TripleHandler(object):
                 number = uri.rsplit('/', 1)[-1]
                 return number
         return None
+
+    def run_checks(self, query, **params):
+        stdout = sys.stdout
+        if self.log_file:
+            sys.stdout = open(self.log_file, 'a+')
+        result = query.run(self.connection, **params)
+        sys.stdout = stdout
+        return result
 
     def update(self, query, **params):
         stdout = sys.stdout
@@ -26,10 +40,12 @@ class TripleHandler(object):
         sys.stdout = stdout
 
     def upload(self, query, **params):
+        params.update(self.meta)
         result = query.run(self.connection, **params)
         print(result)
 
     def add_trips(self, query, **params):
+        params.update(self.meta)
         result = query.write_rdf(self.connection, **params)
         self.triples.append(result)
 
