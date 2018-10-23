@@ -10,7 +10,8 @@ def get_query(**params):
                     ?u <http://purl.obolibrary.org/obo/ARG_2000028> ?vcard . 
                     OPTIONAL { ?vcard <http://www.w3.org/2006/vcard/ns#givenName> ?first .}
                     OPTIONAL { ?vcard <http://www.w3.org/2006/vcard/ns#middleName> ?middle .}
-                    OPTIONAL { ?vcard <http://www.w3.org/2006/vcard/ns#lastName> ?last .} } """
+                    OPTIONAL { ?vcard <http://www.w3.org/2006/vcard/ns#lastName> ?last .}
+                } """
 
     return query
 

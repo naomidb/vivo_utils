@@ -32,17 +32,11 @@ import vivo_utils.queries.make_letter
 import vivo_utils.queries.make_person
 import vivo_utils.queries.make_publisher
 import vivo_utils.queries.merge_entities
-import vivo_utils.queries.make_contributor
 import vivo_utils.queries.make_department
 import vivo_utils.queries.make_grant
 import vivo_utils.queries.make_organization
 import vivo_utils.queries.merge_entities
 import vivo_utils.queries.get_name_id
-import vivo_utils.queries.get_contributor_list
 import vivo_utils.queries.get_department_list
 import vivo_utils.queries.get_grant_list
-import vivo_utils.queries.make_contributor
 import vivo_utils.queries.make_dateTimeInterval
-import vivo_utils.queries.make_department
-import vivo_utils.queries.make_grant
-import vivo_utils.queries.make_organization
