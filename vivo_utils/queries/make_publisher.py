@@ -18,7 +18,6 @@ def get_triples(api, **params):
 <{{namespace}}{{Publisher.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
 <{{namespace}}{{Publisher.n_number}}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Publisher> .
 <{{namespace}}{{Publisher.n_number}}> <http://www.w3.org/2000/01/rdf-schema#label> "{{Publisher.name}}"^^<http://www.w3.org/2001/XMLSchema#string> .
-{%- endif -%}
 
 {%- if source %}
 <{{namespace}}{{Publisher.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/harvestedBy> "{{ source }}"^^<http://www.w3.org/2001/XMLSchema#string> .
