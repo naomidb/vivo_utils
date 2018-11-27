@@ -41,7 +41,7 @@ def run(connection, **params):
             except ValueError as e:
                 last = a_name
 
-        all_authors[a_n] = (last, first, middle, a_name)
+        all_authors[a_n] = (a_name, last, first, middle)
 
     return all_authors
 
