@@ -14,7 +14,9 @@ import vivo_utils.queries.get_article_info
 import vivo_utils.queries.get_article_list
 import vivo_utils.queries.get_articles_for_author
 import vivo_utils.queries.get_articles_with_info
+import vivo_utils.queries.get_author_coauthors
 import vivo_utils.queries.get_author_info
+import vivo_utils.queries.get_author_journals
 import vivo_utils.queries.get_grant_list
 import vivo_utils.queries.get_journal_list
 import vivo_utils.queries.get_journal_on_pub

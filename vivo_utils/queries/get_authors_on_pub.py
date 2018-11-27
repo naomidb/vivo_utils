@@ -11,7 +11,7 @@ def fill_params(connection, **params):
     return params
 
 def get_query(**params):
-    query = """ SELECT ?author_name
+    query = """ SELECT ?author ?author_name
             WHERE {{
                 <{subj}> <http://vivoweb.org/ontology/core#relatedBy> ?relation .
                 ?relation <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Authorship> .
@@ -30,12 +30,14 @@ def run(connection, **params):
     print(response)
     finding = response.json()
 
-    authors = []
+    authors = {}
     for listing in finding['results']['bindings']:
         try:
-            author_name = parse_json(listing, 'author_name')
+            author_uri = parse_json(listing, 'author')
+            author_n = author_uri.rsplit('/', 1)[-1]
+            author_name = parse_json(listing, 'author_name').rstrip()
             if author_name not in authors:
-                authors.append(author_name)
+                authors[author_n] = author_name
         except KeyError as e:
             continue
 
