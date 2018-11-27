@@ -9,7 +9,7 @@ setup(name='vivo_utils',
       url='http://github.com/naomidb/vivo_utils',
       license='Apache License 2.0',
       install_requires=[
-          'requests==2.18.4',
+          'requests',
           'PyYAML==3.12',
           'Jinja2==2.10',
           'bibtexparser==1.0.1'],
