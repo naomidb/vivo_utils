@@ -46,7 +46,7 @@ def get_triples(api):
 {%- if harvest_date %}
 <{{namespace}}{{Journal.n_number}}> <http://vivo.ufl.edu/ontology/vivo-ufl/dateHarvested>  "{{ harvest_date }}"^^<http://www.w3.org/2001/XMLSchema#string> .
 {%- endif %}
-    """
+"""
 
     if api:
         api_trip = """\
