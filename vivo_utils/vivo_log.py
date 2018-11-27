@@ -37,7 +37,7 @@ def update_db(connection, db_name, selections):
 
 def prep_tables(c):
     c.execute('''create table if not exists authors
-                (n_num text, last text collate nocase, first text collate nocase, middle text collate nocase, display text collate nocase, date_added text)''')
+                (n_num text, display text collate nocase, last text collate nocase, first text collate nocase, middle text collate nocase, date_added text)''')
     c.execute('''create table if not exists journals
                 (n_num text, name text collate nocase, issn text, date_added text)''')
     c.execute('''create table if not exists publishers
@@ -54,7 +54,7 @@ def add_authors(c, authors):
     timestamp = now.strftime("%Y-%m-%d")
     for nnum, author in authors.items():
         try:
-            c.execute('INSERT INTO authors (n_num, last, first, middle, display, date_added) VALUES(?, ?, ?, ?, ?, ?)', (((nnum,) + author + (timestamp,))))
+            c.execute('INSERT INTO authors (n_num, display, last, first, middle, date_added) VALUES(?, ?, ?, ?, ?, ?)', (((nnum,) + author + (timestamp,))))
         except sqlite3.IntegrityError as e:
             continue
 
@@ -104,12 +104,15 @@ def add_organizations(c, organizations):
             continue
 
 def lookup(db_name, table, search, term, lenient=False):
-    conn = sqlite3.connect(db_name)
-    c = conn.cursor()
-    if lenient:
-        search = '%' + search + '%'
-    query = '''SELECT * FROM {} WHERE {} like ? '''.format(table, term)
-    c.execute(query, (search,))
-    rows = c.fetchall()
-    conn.close()
+    if search:
+        conn = sqlite3.connect(db_name)
+        c = conn.cursor()
+        if lenient:
+            search = '%' + search + '%'
+        query = '''SELECT * FROM {} WHERE {} like ? '''.format(table, term)
+        c.execute(query, (search,))
+        rows = c.fetchall()
+        conn.close()
+    else:
+        rows = []
     return rows
