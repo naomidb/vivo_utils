@@ -21,7 +21,7 @@ class TripleHandler(object):
                 return number
         return None
 
-    def run_checks(self, query, **params):
+    def run_query(self, query, **params):
         stdout = sys.stdout
         if self.log_file:
             sys.stdout = open(self.log_file, 'a+')
