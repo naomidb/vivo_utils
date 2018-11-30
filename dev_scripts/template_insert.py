@@ -4,6 +4,9 @@ from vivo_queries.vdos.thing import Thing
 #You can also import other queries. If you do this, make sure your params contain information for every query you will be running. Below is an example:
 from vivo_queries.queries import make_person
 
+def return_type():
+    return "update"
+
 def get_params(connection):
     '''
     Create the instances of the objects you will need. Remember that they must all be initialized with connection.
