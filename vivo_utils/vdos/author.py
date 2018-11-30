@@ -23,7 +23,8 @@ class Author(VivoDomainObject):
 
         self.vcard = None
         self.name_id = None
-        self.details = ['name', 'first', 'middle', 'last', 'email', 'phone', 'title', 'orcid']
+        self.name_details = ['first', 'middle', 'last']
+        self.more_details = ['email', 'phone', 'title', 'orcid']
         self.extra = ['overview', 'geographic_focus']
 
     def lookup(self, connection):
@@ -38,3 +39,23 @@ class Author(VivoDomainObject):
         self.title = info['title']
         self.overview = info['overview']
         self.geographic_focus = info['geofocus']
+
+    def combine_name(self):
+        obj_name = ''
+        if self.last:
+            obj_name = last
+            if self.first:
+                obj_name = obj_name + ", " + self.first
+                if self.middle:
+                    obj_name = obj_name + " " + self.middle
+            elif self.middle:
+                obj_name = obj_name + ", " + self.middle
+        elif self.first:
+            if self.middle:
+                obj_name = self.first + " " + self.middle
+            else:
+                obj_name = self.first
+        elif self.middle:
+            obj_name = self.middle
+
+        self.name = obj_name

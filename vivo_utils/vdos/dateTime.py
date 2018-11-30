@@ -13,7 +13,8 @@ class DateTime(VivoDomainObject):
         self.precision = None
         self.date = None
         self.interval = None
-        self.details = ['year', 'month', 'day']
+        self.name_details = []
+        self.more_details = ['year', 'month', 'day']
 
     def get_precision(self):
         if self.year:

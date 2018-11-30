@@ -17,5 +17,6 @@ class Grant(VivoDomainObject):
 
         self.interval_n = None
 
-        self.details = ['name', 'abstract', 'total_award_amount', 'direct_costs',
+        self.name_details = ['name']
+        self.more_details = ['abstract', 'total_award_amount', 'direct_costs',
                         'sponsor_award_id', 'ps_contract_num', 'interval_n']

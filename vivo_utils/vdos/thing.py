@@ -11,4 +11,5 @@ class Thing(VivoDomainObject):
         self.type = None
         self.extra = None
 
-        self.details = ['extra']
+        self.name_details = ['name']
+        self.more_details = ['extra']
