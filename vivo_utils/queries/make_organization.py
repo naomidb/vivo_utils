@@ -2,6 +2,8 @@ from jinja2 import Environment
 
 from vivo_utils.vdos.organization import Organization
 
+def return_type():
+    return "update"
 
 def get_params(connection):
     organization = Organization(connection)

@@ -1,5 +1,8 @@
 from vivo_utils.vdos.thing import Thing
 
+def return_type():
+    return "query"
+
 def get_params(connection):
     thing = Thing(connection)
     params = {'Thing': thing,}

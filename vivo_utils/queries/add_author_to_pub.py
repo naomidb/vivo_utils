@@ -2,6 +2,9 @@ from vivo_utils.vdos.article import Article
 from vivo_utils.vdos.author import Author
 from vivo_utils.queries import make_person
 
+def return_type():
+    return "update"
+
 def get_params(connection):
     article = Article(connection)
     author = Author(connection)

@@ -1,3 +1,6 @@
+def return_type():
+    return "query"
+
 def get_params(connection):
     params = {}
     return params

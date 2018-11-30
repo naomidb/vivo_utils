@@ -1,5 +1,8 @@
 from vivo_utils.vdos.article import Article
 
+def return_type():
+    return "query"
+
 def get_params(connection):
     article = Article(connection)
     params = {'Article': article}

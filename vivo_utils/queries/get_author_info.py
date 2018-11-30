@@ -1,6 +1,9 @@
 from vivo_utils.vdos.author import Author
 from vivo_utils.queries import get_vcard
 
+def return_type():
+    return "query"
+
 def get_params(connection):
     author = Author(connection)
     params = {'Author': author}

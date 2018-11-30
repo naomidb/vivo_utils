@@ -2,6 +2,9 @@ from jinja2 import Environment
 
 from vivo_utils.vdos.author import Author
 
+def return_type():
+    return "update"
+
 def get_params(connection):
     author = Author(connection)
     params = {'Author': author}

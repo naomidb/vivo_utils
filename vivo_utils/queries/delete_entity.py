@@ -4,6 +4,9 @@ from vivo_utils.vdos.thing import Thing
 from vivo_utils.queries import get_label
 from vivo_utils.queries import get_all_triples
 
+def return_type():
+    return "update"
+
 def get_params(connection):
     thing = Thing(connection)
     params = {'Thing': thing,}

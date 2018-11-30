@@ -4,6 +4,8 @@ from vivo_utils.vdos.article import Article
 from vivo_utils.vdos.author import Author
 from vivo_utils.vdos.journal import Journal
 
+def return_type():
+    return "update"
 
 def get_params(connection):
     author = Author(connection)

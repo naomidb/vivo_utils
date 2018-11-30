@@ -2,6 +2,9 @@ from vivo_utils.vdos.thing import Thing
 from vivo_utils.queries import get_all_with_x_as_obj
 from vivo_utils.queries import get_all_with_x_as_subj
 
+def return_type():
+    return "query"
+
 def get_params(connection):
     thing = Thing(connection)
     params = {'Thing': thing,}

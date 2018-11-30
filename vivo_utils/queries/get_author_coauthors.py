@@ -2,6 +2,9 @@ from vivo_utils.vdos.author import Author
 from vivo_utils.queries import get_articles_for_author
 from vivo_utils.queries import get_authors_on_pub
 
+def return_type():
+    return "query"
+
 def get_params(connection):
     author = Author(connection)
     params = {'Author': author}

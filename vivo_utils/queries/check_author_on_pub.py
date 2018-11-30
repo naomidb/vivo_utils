@@ -1,6 +1,9 @@
 from vivo_utils.vdos.article import Article
 from vivo_utils.vdos.author import Author
 
+def return_type():
+    return "query"
+
 def get_params(connection):
     article = Article(connection)
     author = Author(connection)

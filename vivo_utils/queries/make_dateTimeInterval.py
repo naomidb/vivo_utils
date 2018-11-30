@@ -1,5 +1,8 @@
 from vivo_utils.vdos.dateTime import DateTime
 
+def return_type():
+    return "update"
+
 def get_params(connection):
     start_date = DateTime(connection)
     end_date = DateTime(connection)

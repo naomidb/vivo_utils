@@ -4,6 +4,9 @@ from vivo_utils.vdos.journal import Journal
 from vivo_utils.vdos.publisher import Publisher
 from vivo_utils.queries import make_publisher
 
+def return_type():
+    return "update"
+
 def get_params(connection):
     journal = Journal(connection)
     publisher = Publisher(connection)

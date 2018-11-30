@@ -2,6 +2,9 @@ from vivo_utils.vdos.thing import Thing
 from vivo_utils.queries import delete_entity
 from vivo_utils.queries import get_all_triples
 
+def return_type():
+    return "update"
+
 def get_params(connection):
     thing1 = Thing(connection)
     thing2 = Thing(connection)

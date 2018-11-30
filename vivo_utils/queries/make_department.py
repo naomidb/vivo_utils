@@ -3,6 +3,9 @@ from jinja2 import Environment
 from vivo_utils.vdos.department import Department
 
 
+def return_type():
+    return "update"
+
 def get_params(connection):
     department = Department(connection)
     params = {'Department': department}

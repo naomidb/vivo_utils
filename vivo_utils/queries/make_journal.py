@@ -3,6 +3,9 @@ from jinja2 import Environment
 from vivo_utils.vdos.journal import Journal
 from vivo_utils.vdos.publisher import Publisher
 
+def return_type():
+    return "update"
+
 def get_params(connection):
     journal = Journal(connection)
     publisher = Publisher(connection)

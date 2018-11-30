@@ -7,6 +7,9 @@ from vivo_utils.vdos.grant import Grant
 from vivo_utils.vdos.organization import Organization
 
 
+def return_type():
+    return "update"
+
 def get_params(connection):
     grant = Grant(connection)
     award_by = Organization(connection)
