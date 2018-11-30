@@ -10,5 +10,4 @@ class Department(VivoDomainObject):
         self.n_number = None
         self.name = None
         self.dep_type = None
-        self.name_details = ['name']
-        self.more_details = ['dep_type']
+        self.details = ['dep_type']

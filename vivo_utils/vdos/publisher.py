@@ -8,5 +8,4 @@ class Publisher(VivoDomainObject):
         
         self.n_number = None
         self.name = None
-        self.name_details = ['name']
-        self.more_details = []
+        self.details = []

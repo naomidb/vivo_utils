@@ -10,5 +10,4 @@ class Journal(VivoDomainObject):
         self.name = None
         self.issn = None
         self.eissn = None
-        self.name_details = ['name']
-        self.more_details = ['issn', 'eissn']
+        self.details = ['issn', 'eissn']
