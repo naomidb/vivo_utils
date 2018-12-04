@@ -43,7 +43,7 @@ class Author(VivoDomainObject):
     def combine_name(self):
         obj_name = ''
         if self.last:
-            obj_name = last
+            obj_name = self.last
             if self.first:
                 obj_name = obj_name + ", " + self.first
                 if self.middle:
