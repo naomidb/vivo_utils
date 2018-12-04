@@ -2,6 +2,8 @@ from vivo_utils.vdos.VDO import VivoDomainObject
 
 class Article(VivoDomainObject):
     def __init__(self, connection):
+        # Queries should change the type for other varieties of publication if necessary
+        # Default type of academic article
         self.connection = connection
         self.type = "academic_article"
         self.category = "publication"
@@ -18,7 +20,7 @@ class Article(VivoDomainObject):
         self.pmid = None
         self.number = None
         # self.details = ['volume', 'issue', 'start_page', 'end_page', 'publication_year', 'doi', 'pmid']
-        self.details = ['type', 'volume', 'issue', 'start_page', 'end_page', 'publication_year', 'doi', 'pmid', 'number']
+        self.details = ['volume', 'issue', 'start_page', 'end_page', 'publication_year', 'doi', 'pmid', 'number']
 
 
     def lookup(self, connection):
