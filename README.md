@@ -37,10 +37,10 @@ Organization
 Publisher
 Thing
 
-## vivo_log, input_matcher, and auth_match
+## Matching with vivo_log, input_matcher, and auth_match
 When ingests are trying to match new entities to existing ones in VIVO, they can do so through input_matcher and vivo_log. When starting an ingest, use vivo_log to create a temporary database of entities in VIVO (which precludes the timely process of constantly label matching via the API), Input_matcher will then perform matches through that database. Additionally, input_matcher can do more sophisticated matching of authors using auth_matches to calculate points per potential match by comparing coauthors and journals to the coauthors and journals of the incoming author.
 
 The advanced author_matching provides points for every coauthor match and journal match. The best match is then compared to the second-best match. If the best match is x times better than the second-best, it is returned. The default value for x is 2, but this can be changed via giving a different parameter.
 
-# Publication and Grantication
+## Publication and Grantication
 These objects are used to store data in the interim between input and vivo-formatted output.
