@@ -15,6 +15,7 @@ Queries to insert into or get data from VIVO
 
 ### Query Types
 Queries have a select set of key words that they start with and use either the query or update API.
+
 | Add    | Update | Add a relationship between two existing entities. |
 |--------|--------|---------------------------------------------------|
 | Check  | Query  | Check if something exists. Returns a boolean.     |
