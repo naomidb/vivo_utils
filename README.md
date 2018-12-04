@@ -27,16 +27,17 @@ Queries have a select set of key words that they start with and use either the q
 
 ## VDOs
 VDOs represent the types of Things that exist in VIVO. They hold data to be used in preparing queries and updates to VIVO. VDOs are meant to be as broad as possible and the 'type' attribute can be used to specify. For instance, academic articles, editorial articles, and letters would all be part of the Article VDO. The 'Thing' VDO is technically broad enough to include all types, but is meant to be used when many different objects could fill a query. Queries using the Thing VDO typically need just the identifying number of the entity or, at most, one other piece of information.
+
 The list of VDOs are:
-Article
-Author
-DateTime
-Department
-Grant
-Journal
-Organization
-Publisher
-Thing
+* Article
+* Author
+* DateTime
+* Department
+* Grant
+* Journal
+* Organization
+* Publisher
+* Thing
 
 ## Matching with vivo_log, input_matcher, and auth_match
 When ingests are trying to match new entities to existing ones in VIVO, they can do so through input_matcher and vivo_log. When starting an ingest, use vivo_log to create a temporary database of entities in VIVO (which precludes the timely process of constantly label matching via the API), Input_matcher will then perform matches through that database. Additionally, input_matcher can do more sophisticated matching of authors using auth_matches to calculate points per potential match by comparing coauthors and journals to the coauthors and journals of the incoming author.
