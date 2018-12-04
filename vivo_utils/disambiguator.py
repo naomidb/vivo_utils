@@ -1,3 +1,7 @@
+'''
+deprecated
+'''
+
 from vivo_utils.vdos.auth_match import Auth_Match
 from vivo_utils import queries
 
