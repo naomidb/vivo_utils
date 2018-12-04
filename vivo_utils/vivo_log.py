@@ -1,4 +1,5 @@
 import datetime
+import os.path
 import sqlite3
 
 from vivo_utils.queries import get_person_list
@@ -9,6 +10,11 @@ from vivo_utils.queries import get_grant_list
 from vivo_utils.queries import get_organization_list
 
 def update_db(connection, db_name, selections):
+    if os.path.isfile(db_name):
+        print('WARNING: The temporary local database already exists. This may cause matching issues.')
+        cont = input('Would you like to continue anyway? (y/n) ')
+        if cont.lower() == 'n':
+            exit('Exiting program.\nTemporary matching database (' + db_name + ') already exists.')
     conn = sqlite3.connect(db_name)
     c = conn.cursor()
     prep_tables(c)
@@ -37,17 +43,17 @@ def update_db(connection, db_name, selections):
 
 def prep_tables(c):
     c.execute('''create table if not exists authors
-                (n_num text, display text collate nocase, last text collate nocase, first text collate nocase, middle text collate nocase, date_added text)''')
+                (n_num text unique, display text collate nocase, last text collate nocase, first text collate nocase, middle text collate nocase, date_added text)''')
     c.execute('''create table if not exists journals
-                (n_num text, name text collate nocase, issn text, date_added text)''')
+                (n_num text unique, name text collate nocase, issn text, date_added text)''')
     c.execute('''create table if not exists publishers
-                (n_num text, name text collate nocase, date_added text)''')
+                (n_num text unique, name text collate nocase, date_added text)''')
     c.execute('''create table if not exists publications
-                (n_num text, title text collate nocase, doi text, pmid text, type text, date_added text)''')
+                (n_num text unique, title text collate nocase, doi text, pmid text, type text, date_added text)''')
     c.execute('''create table if not exists grants
-                (n_num text, name text collate nocase, ps_num text, pi_num text, pi_name text, start_date text, end_date text, date_added text)''')
+                (n_num text unique, name text collate nocase, ps_num text, pi_num text, pi_name text, start_date text, end_date text, date_added text)''')
     c.execute('''create table if not exists organizations
-                (n_num text, name text collate nocase, type text, date_added text)''')
+                (n_num text unique, name text collate nocase, type text, date_added text)''')
 
 def add_authors(c, authors):
     now = datetime.datetime.now()
