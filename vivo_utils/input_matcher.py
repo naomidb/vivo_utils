@@ -1,7 +1,7 @@
 import sys
 
 from vivo_utils import vivo_log
-from vivo_utils.vdos.auth_match import Auth_Match
+from vivo_utils.auth_match import Auth_Match
 
 def pub_matching(publication, db_name):
     if isinstance(publication, str):
