@@ -75,7 +75,7 @@ def author_match(author, db_name, added_authors=None):
         matches = vivo_log.lookup(db_name, 'authors', author, 'display', True)
     return matches
 
-def advanced_author_match(connection, matches, journal, coauthors, output_file):
+def advanced_author_match(connection, matches, journal, coauthors, output_file, match_ratio=2):
     stdout = sys.stdout
     sys.stdout = open(output_file, 'a+')
     options = []
@@ -101,7 +101,7 @@ def advanced_author_match(connection, matches, journal, coauthors, output_file):
             " with " + str(sorted_options[0].points) + " points")
 
     sys.stdout = stdout
-    if sorted_options[0].points > (sorted_options[1].points * 2):
+    if sorted_options[0].points > (sorted_options[1].points * match_ratio):
         return sorted_options[0].n_number
     else:
         return list(options.values())
