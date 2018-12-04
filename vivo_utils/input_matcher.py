@@ -1,40 +1,50 @@
 import sys
 
+from vivo_utils import vivo_log
 from vivo_utils.vdos.auth_match import Auth_Match
 
 def pub_matching(publication, db_name):
-    matches = vivo_log.lookup(db_name, 'publications', publication.title, 'title')
-    if len(matches) == 0:
-        # doi match
-        if publication.doi:
-            # make sure doi is not 999999?
-            matches = vivo_log.lookup(db_name, 'publications', publication.doi, 'doi')
-    if len(matches) == 0:
-        # pmid match
-        if publication.pmid:
-            matches = vivo_log.lookup(db_name, 'publications', publication.pmid, 'pmid')
-    # if len(matches) == 0:
-    #     # wosid match
-    #     matches = vivo_log.lookup(db_name, 'publications', publication.wosid, 'wosid')
+    if isinstance(publication, str):
+        matches = vivo_log.lookup(db_name, 'publications', publication, 'title')
+    else:
+        matches = vivo_log.lookup(db_name, 'publications', publication.title, 'title')
+        if len(matches) == 0:
+            # doi match
+            if publication.doi:
+                # make sure doi is not 999999?
+                matches = vivo_log.lookup(db_name, 'publications', publication.doi, 'doi')
+        if len(matches) == 0:
+            # pmid match
+            if publication.pmid:
+                matches = vivo_log.lookup(db_name, 'publications', publication.pmid, 'pmid')
+        # if len(matches) == 0:
+        #     # wosid match
+        #     matches = vivo_log.lookup(db_name, 'publications', publication.wosid, 'wosid')
     
     return matches
 
 def journal_matching(publication, db_name, added_journals=None):
-    matches = vivo_log.lookup(db_name, 'journals', publication.journal, 'name')
-    if publication.journal in added_journals.keys():
-        matches.append(added_journals[publication.journal])
-    if len(matches) == 0:
-        # lenient string match
-        matches = vivo_log.lookup(db_name, 'journals', publication.journal, 'name', True)
-    if len(matches) == 0:
-        # issn match
-        matches = vivo_log.lookup(db_name, 'journals', publication.issn, 'issn')
-    if len(matches) == 0:
-        # eissn match
-        matches = vivo_log.lookup(db_name, 'journals', publication.eissn, 'eissn')
-    if len(matches) == 0:
-        # eissn in issn match
-        matches = vivo_log.lookup(db_name, 'journals', publication.eissn, 'issn')
+    if isinstance(publication, str):
+        matches = vivo_log.lookup(db_name, 'journals', publication, 'name')
+        if len(matches) == 0:
+            # lenient string match
+            matches = vivo_log.lookup(db_name, 'journals', publication, 'name', True)
+    else:
+        matches = vivo_log.lookup(db_name, 'journals', publication.journal, 'name')
+        if publication.journal in added_journals.keys():
+            matches.append(added_journals[publication.journal])
+        if len(matches) == 0:
+            # lenient string match
+            matches = vivo_log.lookup(db_name, 'journals', publication.journal, 'name', True)
+        if len(matches) == 0:
+            # issn match
+            matches = vivo_log.lookup(db_name, 'journals', publication.issn, 'issn')
+        if len(matches) == 0:
+            # eissn match
+            matches = vivo_log.lookup(db_name, 'journals', publication.eissn, 'eissn')
+        if len(matches) == 0:
+            # eissn in issn match
+            matches = vivo_log.lookup(db_name, 'journals', publication.eissn, 'issn')
     
     return matches
 
