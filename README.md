@@ -15,12 +15,13 @@ Queries to insert into or get data from VIVO
 
 ### Query Types
 Queries have a select set of key words that they start with and use either the query or update API.
-Add       Update    Add a relationship between two existing entities.
-Check     Query     Check if something exists. Returns a boolean.
-Delete    Update    Remove data from VIVO.
-Get       Query     Get data from VIVO.
-Make      Update    Make a new entity in VIVO.
-Merge     Update    Merge two entities in VIVO.
+| Add    | Update | Add a relationship between two existing entities. |
+|--------|--------|---------------------------------------------------|
+| Check  | Query  | Check if something exists. Returns a boolean.     |
+| Delete | Update | Remove data from VIVO.                            |
+| Get    | Query  | Get data from VIVO.                               |
+| Make   | Update | Make a new entity in VIVO.                        |
+| Merge  | Update | Merge two entities in VIVO.                       |
 
 ## VDOs
 VDOs represent the types of Things that exist in VIVO. They hold data to be used in preparing queries and updates to VIVO. VDOs are meant to be as broad as possible and the 'type' attribute can be used to specify. For instance, academic articles, editorial articles, and letters would all be part of the Article VDO. The 'Thing' VDO is technically broad enough to include all types, but is used when many different objects could fill a query. The list of VDOs are:
