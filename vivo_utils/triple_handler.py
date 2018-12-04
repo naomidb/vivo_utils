@@ -3,7 +3,7 @@ import sys
 class TripleHandler(object):
     def __init__(self, api, connection, meta, log_file=None):
         '''
-        api     bool    update vivo through the api(True) or create rdf files(False)
+        api     bool    update vivo through the api (True) or create rdf files (False)
         meta    dict    harvest information ('source' and 'harvest_date')
         '''
         self.api = api
@@ -38,6 +38,7 @@ class TripleHandler(object):
         else:
             result = self.add_trips(query, **params)
         sys.stdout = stdout
+        return result
 
     def upload(self, query, **params):
         params.update(self.meta)
@@ -55,6 +56,6 @@ class TripleHandler(object):
                 rdf.write(triple + '\n')
         if self.log_file:
             with open(self.log_file, 'a+') as log:
-                log.write("=" * 15 + "rdf file saved to: " + filepath)
+                log.write('\n' + '=' * 15 + 'rdf file saved to: ' + filepath)
         else:
-            print("rdf file saved to " + filepath)
+            print('rdf file saved to ' + filepath)
