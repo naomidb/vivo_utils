@@ -26,6 +26,7 @@ def get_triples(api, **params):
 <{RELATION}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Authorship> .
 <{RELATION}> <http://vivoweb.org/ontology/core#relates> <{ARTICLE}> .
 <{RELATION}> <http://vivoweb.org/ontology/core#relates> <{AUTHOR}> .
+<{AUTHOR}> <http://vivoweb.org/ontology/core#relatedBy> <{RELATION}> .
 <{ARTICLE}> <http://vivoweb.org/ontology/core#relatedBy> <{RELATION}> .""".format(RELATION = params['relation_url'], ARTICLE = params['article_url'], AUTHOR = params['author_url'])
 
     if api:
